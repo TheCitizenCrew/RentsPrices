@@ -1,6 +1,8 @@
 # RentsPrices
 
-**! UNDER DEVELOPMENT !**
+**! Work in progress !**
+
+![Work in progress][workInProgressImage]
 
 "RentPrices" aka "PrixDesLoyers" permet de saisir les prix des loyers pour un logement année après années.
 
@@ -37,4 +39,7 @@ Use "[composer](https://getcomposer.org/)".
 		try_files $uri $uri/ /index.php?$query_string ;
 	}
 	...
+
+
+[workInProgressImage]: http://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Work_in_progress_%283709389075%29.jpg/320px-Work_in_progress_%283709389075%29.jpg?raw=true
  
