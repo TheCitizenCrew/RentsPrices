@@ -1,0 +1,8 @@
+/vendor
+.env
+
+# eclipse specific git ignore
+.project
+.buildpath
+.settings/
+
