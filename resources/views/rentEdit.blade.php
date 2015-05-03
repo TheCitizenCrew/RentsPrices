@@ -9,8 +9,7 @@
 	@if (! $errors->isEmpty())
 		<p class="bg-warning">il y a des erreurs dans le formulaire.</p>
 	@endif				
-		<p><?php echo var_export( $errors, true ); ?></p>
-	
+
 	<form class="form-horizontal" method="POST">
 		<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 

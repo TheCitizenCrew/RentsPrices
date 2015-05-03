@@ -37,7 +37,6 @@ class RentController extends BaseController
 		{
 			$rent = \App\Models\Rent::findOrFail( $id );
 		}
-		// error_log(var_export($rent, true));
 		return view( 'rentEdit', [ 'rent' => $rent ] );
 	}
 
@@ -124,6 +123,7 @@ class RentController extends BaseController
 	 */
 	protected function updateProcessRentPrices( Request $request, \App\Models\Rent $rent, array &$errors, array &$rentPricesNew )
 	{
+		$rpIdx = 0 ;
 		foreach( $request->get( 'rentprice' ) as $rp )
 		{
 			$validator = Validator::make( $rp, \App\Models\RentPrice::$rules );
@@ -135,12 +135,12 @@ class RentController extends BaseController
 
 				if( isset($errs['year']) )
 				{
-					$errs['year'.count($rentPricesNew)] = $errs['year'] ;
+					$errs['year'.count($rpIdx)] = $errs['year'] ;
 					unset($errs['year']);
 				}
 				if( isset($errs['price']) )
 				{
-					$errs['price'.count($rentPricesNew)] = $errs['price'] ;
+					$errs['price'.count($rpIdx)] = $errs['price'] ;
 					unset($errs['price']);
 				}
 		
@@ -166,6 +166,7 @@ class RentController extends BaseController
 				$rentPricesNew[] = $o;
 			}
 		
+			$rpIdx ++ ;
 		}
 		
 	}
