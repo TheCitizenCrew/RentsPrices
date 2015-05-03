@@ -14,6 +14,7 @@ L'idée est de permettre des études à partir de données déclarées (crowdsou
 ## RoadMap
 
 issues: #1 #2
+issues: TheCitizenCrew/RentsPrices#1, TheCitizenCrew/RentsPrices#2
 
 - [x] Choose frameworks
 - [ ] Rent input
