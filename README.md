@@ -6,6 +6,15 @@ PrixDesLoyers permet de saisir les prix des loyers pour un logement année aprè
 
 L'idée est de permettre des études à partir de données déclarées (crowdsourcing) puisque c'est le seul moyen de les obtenir.
 
+- [x] Choose frameworks
+- [ ] Rent input
+  - [ ] form for Rent & Rent Prices
+    - [ ] Map location of the rent's address
+- [ ] Display Rents
+  - [ ] on a map
+  - [ ] export data on query
+  - [ ] statistics by years, places, ... 
+
 # Installation
 
 ## Dependencies
