@@ -2,9 +2,13 @@
 
 **UNDER DEVELOPMENT !**
 
-PrixDesLoyers permet de saisir les prix des loyers pour un logement année après années.
+"RentPrices" aka "PrixDesLoyers" permet de saisir les prix des loyers pour un logement année après années.
 
 L'idée est de permettre des études à partir de données déclarées (crowdsourcing) puisque c'est le seul moyen de les obtenir.
+
+## User view
+
+RoadMap:
 
 - [x] Choose frameworks
 - [ ] Rent input
@@ -15,17 +19,21 @@ L'idée est de permettre des études à partir de données déclarées (crowdsou
   - [ ] export data on query
   - [ ] statistics by years, places, ... 
 
-# Installation
 
-## Dependencies
+
+## Tech view
+
+### Installation
+
+#### Dependencies
 
 [Php](http://php.net), [Lumen](http://lumen.laravel.com), [CDNJs](https://cdnjs.com/), [Bootstrap](http://getbootstrap.com), [JQuery](http://jquery.com), [Leaflet](http://leafletjs.com/)
  
 Use "[composer](https://getcomposer.org/)".
 
-## Web server
+#### Web server
 
-### nginx
+##### nginx
 
 	...
 	# remove trailing slash, but not for homepage
