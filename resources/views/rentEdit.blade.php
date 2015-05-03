@@ -8,6 +8,7 @@
     
 	@if (! $errors->isEmpty())
 		<p class="bg-warning">il y a des erreurs dans le formulaire.</p>
+		<p><?php echo var_export( $errors, true ); ?></p>
 	@endif				
 
 	<form class="form-horizontal" method="POST">
@@ -71,16 +72,18 @@
 
 		<div class="container" id="rents">
 			<div class="row" id="rentRow">
-				<div class="form-group">
-					<div class="col-xs-2">
-						<label >Année</label>
-						<input type="text" class="form-control" name="rentprice[year][]" placeholder="L'année" />
+				<fieldset>
+					<div class="form-group">
+						<div class="col-xs-2">
+							<label >Année</label>
+							<input type="text" class="form-control" name="rentprice[0][year]" placeholder="L'année" />
+						</div>
+						<div class="col-xs-2">
+							<label >Prix mensuel</label>
+							<input type="text" class="form-control" name="rentprice[0][price]" placeholder="Le prix mensuel" />
+						</div>
 					</div>
-					<div class="col-xs-2">
-						<label >Prix mensuel</label>
-						<input type="text" class="form-control" name="rentprice[price][]" placeholder="Le prix mensuel" />
-					</div>
-				</div>
+				</fieldset>
 			</div>
 			<button type="button" id="addRent" class="btn btn-default">Ajouter une année</button>
 		</div>
@@ -98,7 +101,12 @@
 		$(function() {
 			$('#addRent').on('click', function(){
 				var n = $('#rents > div.row').size();
-				$(this).before( $('#rentRow').clone().attr('id', n) );
+				// Clone the initial Rent's row div "#rentRow"
+				var row = $('#rentRow').clone();
+				// Rename the input field "rentprice[0][xxx]"
+				row.html( row.html().replace(/(rentprice\[)[0-9]+(\])/gm, '$1'+n+'$2') );
+				// Insert the copy into the DOM
+				$(this).before( row.attr('id', n) );
 			});
 		});
 	</script>

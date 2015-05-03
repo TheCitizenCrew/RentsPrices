@@ -21,6 +21,10 @@ class Rent extends Model
 		'city'=>'required'
 	];
 
+	/**
+	 * Get Rent's RentPrices
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function prices()
 	{
 		return $this->hasMany('App\Models\RentPrice');

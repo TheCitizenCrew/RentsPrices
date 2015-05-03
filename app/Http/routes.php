@@ -26,7 +26,7 @@ $app->get('/', 'App\Http\Controllers\Controller@home');
 
 $app->group(['prefix' => 'rent'], function($app)
 {
-	$app->get('', 'App\Http\Controllers\RentController@editNew');
+	$app->get('', 'App\Http\Controllers\RentController@edit');
 	$app->get('{id:[0-9]+}', 'App\Http\Controllers\RentController@edit');
 	$app->post('', 'App\Http\Controllers\RentController@save');
 });

@@ -7,83 +7,56 @@ use DB ;
 
 class RentController extends BaseController
 {
-    public function editNew()
+
+	/**
+	 * Edit a new or an existing Rent.
+	 * 
+	 * @param string $id
+	 * @return \Illuminate\View\View
+	 */
+    public function edit($id=null)
     {
-    	//$rent = \App\Models\Rent::find();
-    	$rent = new \App\Models\Rent();
+    	if( $id==null)
+    	{
+    		$rent = new \App\Models\Rent();
+    	}
+    	else
+    	{
+    		$rent = \App\Models\Rent::find($id);
+    	}
     	return view('rentEdit', ['rent'=>$rent]);
     }
 
-    public function edit($id)
-    {
-    	$rent = \App\Models\Rent::find($id);
-    	return view('rentEdit', ['rent'=>$rent]);
-    }
-    
+    /**
+     * Save a Rent and it's RentPrice(s).
+     * 
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function save(Request $request)
     {
- error_log( var_export($request->all(),true));
- 
-     	DB::transaction(function() use($request){
+    	$rent = new \App\Models\Rent();
 
+    	DB::transaction(function() use($request){
+    	
+    		// Rent
      		$this->validate($request, \App\Models\Rent::$rules);
      		$rent = \App\Models\Rent::create($request->all() );
-     		
-     		/*
-     		 * remap les champs html en tableaux compatible avec le model RentPrice
-     		 Input :
-     		 'rentprice' =>
-     		 array (
-     		 'year' =>
-     		 array (
-     		 0 => '1',
-     		 1 => '3',
-     		 ),
-     		 'price' =>
-     		 array (
-     		 0 => '2',
-     		 1 => '4',
-     		 ),
-     		 ),
-     		
-     		 Output :
-     		 array (
-     		 0 =>
-     		 array (
-     		 'year' => '1',
-     		 'price' => '2',
-     		 ),
-     		 1 =>
-     		 array (
-     		 'year' => '3',
-     		 'price' => '4',
-     		 ),
-     		 )
-     		
-     		*/
-     		$rp = $request->get('rentprice');
-     		$rentPrices = array();
-     		foreach( ['year','price'] as $k )
+
+     		$rpos=array();
+     		// RentPrices
+     		foreach( $request->get('rentprice') as $rp )
      		{
-     			$i=0;
-     			foreach( $rp[$k] as $v )
-     			{
-     				if( ! isset($rentPrices[$i]))
-     					$rentPrices[$i] = array();
-     				$rentPrices[$i][$k] = $v ;
-     				$i++;
+     			$validator = $this->getValidationFactory()->make($rp, \App\Models\RentPrice::$rules );
+     			if ($validator->fails()) {
+     				$this->throwValidationException($request, $validator);
      			}
+     			$rpos[] = new \App\Models\RentPrice($rp);
      		}
-     		
-     		foreach( $rentPrices as $rp )
-     		{
-     			$this->validate($rp, \App\Models\RentPrice::$rules);
-     			$rp->id = $rent->id ;
- 	    		$rent = \App\Models\Rent::create($rp);
-     		}
+     		$rent->prices()->saveMany($rpos);
+    	});
 
-    	}); // transaction
-
-    	return view('rentEdit');
+    	return view('rentEdit', ['rent'=>$rent]);
     }
+
 }
