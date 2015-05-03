@@ -18,10 +18,10 @@
 		<div class="form-group">
 			<div class="checkbox">
 				<label>
-					<input type="radio" name="buildingIndividual" value="1" />Appartement
+					<input type="radio" name="buildingIndividual" value="1" @if($rent->buildingIndividual==1) checked="checked" @endif />Appartement
 				</label>
 				<label>
-					<input type="radio" name="buildingIndividual" value="0" />Maison individuelle
+					<input type="radio" name="buildingIndividual" value="0" @if($rent->buildingIndividual===0)checked="checked" @endif />Maison individuelle
 				</label>
 				<p class="help-block">S'il n'y a qu'un seul logement dans le bâtiment sélectionnez "maison individuelle".</p>
 				@if ($errors->first('buildingIndividual'))
@@ -31,35 +31,35 @@
 		</div>
 		<div class="form-group">
 			<label for="buildingStage">Étage</label>
-			<input type="text" class="form-control" name="buildingStage" id="buildingStage" placeholder="L'étage de l'appartement">
+			<input type="text" class="form-control" name="buildingStage" id="buildingStage" placeholder="L'étage de l'appartement" value="{{$rent->buildingStage}}" />
 			@if ($errors->first('buildingStage'))
 				<p class="text-danger">error {{$errors->first('buildingStage')}} </p>
 			@endif				
 		</div>
 		<div class="form-group">
 			<label for="buildingName">Bâtiment</label>
-			<input type="text" class="form-control" name="buildingName" id="buildingName" placeholder="Le numéro ou nom du bâtiment">
+			<input type="text" class="form-control" name="buildingName" id="buildingName" placeholder="Le numéro ou nom du bâtiment" value="{{$rent->buildingName}}" />
 			@if ($errors->first('buildingName'))
 				<p class="text-danger">error {{$errors->first('buildingName')}} </p>
 			@endif				
 		</div>
 		<div class="form-group">
 			<label for="street">Rue</label>
-			<input type="text" class="form-control" name="street" id="street" placeholder="Le numéro et nom de la rue">
+			<input type="text" class="form-control" name="street" id="street" placeholder="Le numéro et nom de la rue" value="{{$rent->street}}" />
 			@if ($errors->first('street'))
 				<p class="text-danger">error {{$errors->first('street')}} </p>
 			@endif				
 		</div>
 		<div class="form-group">
 			<label for="zipcode">Code postal</label>
-			<input type="text" class="form-control" name="zipcode" id="zipcode" placeholder="Le code postal">
+			<input type="text" class="form-control" name="zipcode" id="zipcode" placeholder="Le code postal"  value="{{$rent->zipcode}}" />
 			@if ($errors->first('zipcode'))
 				<p class="text-danger">error {{$errors->first('zipcode')}} </p>
 			@endif				
 		</div>
 		<div class="form-group">
 			<label for="city">Ville</label>
-			<input type="text" class="form-control" name="city" id="city" placeholder="La commune">
+			<input type="text" class="form-control" name="city" id="city" placeholder="La commune"  value="{{$rent->city}}" />
 			@if ($errors->first('city'))
 				<p class="text-danger">error {{$errors->first('city')}} </p>
 			@endif				
@@ -74,11 +74,11 @@
 				<div class="form-group">
 					<div class="col-xs-2">
 						<label >Année</label>
-						<input type="text" class="form-control" name="years[]" placeholder="L'année">
+						<input type="text" class="form-control" name="rentprice[year][]" placeholder="L'année" />
 					</div>
 					<div class="col-xs-2">
 						<label >Prix mensuel</label>
-						<input type="text" class="form-control" name="prices[]" placeholder="Le prix mensuel">
+						<input type="text" class="form-control" name="rentprice[price][]" placeholder="Le prix mensuel" />
 					</div>
 				</div>
 			</div>
