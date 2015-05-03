@@ -10,6 +10,8 @@ L'idée est de permettre des études à partir de données déclarées (crowdsou
 
 ## Dependencies
 
+[Php](http://php.net), [Lumen](http://lumen.laravel.com), [CDNJs](https://cdnjs.com/), [Bootstrap](http://getbootstrap.com), [JQuery](http://jquery.com), [Leaflet](http://leafletjs.com/)
+ 
 Use "[composer](https://getcomposer.org/)".
 
 ## Web server
