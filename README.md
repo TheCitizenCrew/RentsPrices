@@ -13,6 +13,8 @@ L'idée est de permettre des études à partir de données déclarées (crowdsou
 
 ## RoadMap
 
+issues: #1 #2
+
 - [x] Choose frameworks
 - [ ] Rent input
   - [ ] form for Rent & Rent Prices #1 #2
