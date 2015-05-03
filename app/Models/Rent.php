@@ -27,6 +27,6 @@ class Rent extends Model
 	 */
 	public function prices()
 	{
-		return $this->hasMany('App\Models\RentPrice');
+		return $this->hasMany('\App\Models\RentPrice');
 	}
 }

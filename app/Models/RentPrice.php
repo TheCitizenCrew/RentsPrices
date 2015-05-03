@@ -15,7 +15,7 @@ class RentPrice extends Model
 	
 	public function rent()
 	{
-		return $this->belongsTo('App\Models\Rent');
+		return $this->belongsTo('\App\Models\Rent');
 	}
 
 }

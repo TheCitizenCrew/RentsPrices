@@ -8,9 +8,9 @@
     
 	@if (! $errors->isEmpty())
 		<p class="bg-warning">il y a des erreurs dans le formulaire.</p>
-		<p><?php echo var_export( $errors, true ); ?></p>
 	@endif				
-
+		<p><?php echo var_export( $errors, true ); ?></p>
+	
 	<form class="form-horizontal" method="POST">
 		<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 
@@ -77,10 +77,16 @@
 						<div class="col-xs-2">
 							<label >Année</label>
 							<input type="text" class="form-control" name="rentprice[0][year]" placeholder="L'année" />
+							@if( $errors->first('year0') )
+								<p class="text-danger">error {{$errors->first('year0')}} </p>
+							@endif				
 						</div>
 						<div class="col-xs-2">
 							<label >Prix mensuel</label>
 							<input type="text" class="form-control" name="rentprice[0][price]" placeholder="Le prix mensuel" />
+							@if( $errors->first('price0') )
+								<p class="text-danger">error {{$errors->first('price0')}} </p>
+							@endif				
 						</div>
 					</div>
 				</fieldset>
