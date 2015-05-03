@@ -4,6 +4,9 @@
 
 ![Work in progress][workInProgressImage]
 
+[![Code Climate](https://codeclimate.com/github/TheCitizenCrew/RentsPrices/badges/gpa.svg)](https://codeclimate.com/github/TheCitizenCrew/RentsPrices)
+[![Test Coverage](https://codeclimate.com/github/TheCitizenCrew/RentsPrices/badges/coverage.svg)](https://codeclimate.com/github/TheCitizenCrew/RentsPrices)
+
 "RentPrices" aka "PrixDesLoyers" permet de saisir les prix des loyers pour un logement année après années.
 
 L'idée est de permettre des études à partir de données déclarées (crowdsourcing) puisque c'est le seul moyen de les obtenir.
