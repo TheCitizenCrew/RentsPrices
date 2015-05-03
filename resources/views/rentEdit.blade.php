@@ -71,26 +71,34 @@
 		<p>Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Nam dictum, odio nec pretium volutpat.</p>
 
 		<div class="container" id="rents">
-			<div class="row" id="rentRow">
-				<fieldset>
-					<div class="form-group">
-						<div class="col-xs-2">
-							<label >Année</label>
-							<input type="text" class="form-control" name="rentprice[0][year]" placeholder="L'année" />
-							@if( $errors->first('year0') )
-								<p class="text-danger">error {{$errors->first('year0')}} </p>
-							@endif				
+			<?php $rowsCount = 0 ; ?>
+			@foreach ($rent->prices as $price)
+				<div class="row" id="rentRow">
+					<fieldset>
+					<input type="hidden" name="rentprice[{{$rowsCount}}][id]" value="{{$price->id}}" />
+						<div class="form-group">
+							<div class="col-xs-2">
+								<label >Année</label>
+								<input type="text" class="form-control" placeholder="L'année"
+									name="rentprice[{{$rowsCount}}][year]" value="{{$price->year}}" />
+								@if( $errors->first('year'.$rowsCount) )
+									<p class="text-danger">error {{$errors->first('year'.$rowsCount)}} </p>
+								@endif				
+							</div>
+							<div class="col-xs-2">
+								<label >Prix mensuel</label>
+								<input type="text" class="form-control" placeholder="Le prix mensuel"
+									name="rentprice[{{$rowsCount}}][price]" value="{{$price->price}}" />
+								@if( $errors->first('price'.$rowsCount) )
+									<p class="text-danger">error {{$errors->first('price'.$rowsCount)}} </p>
+								@endif				
+							</div>
 						</div>
-						<div class="col-xs-2">
-							<label >Prix mensuel</label>
-							<input type="text" class="form-control" name="rentprice[0][price]" placeholder="Le prix mensuel" />
-							@if( $errors->first('price0') )
-								<p class="text-danger">error {{$errors->first('price0')}} </p>
-							@endif				
-						</div>
-					</div>
-				</fieldset>
-			</div>
+					</fieldset>
+				</div>
+				<?php $rowsCount ++ ; ?>
+			@endforeach
+
 			<button type="button" id="addRent" class="btn btn-default">Ajouter une année</button>
 		</div>
 
@@ -111,8 +119,9 @@
 				var row = $('#rentRow').clone();
 				// Rename the input field "rentprice[0][xxx]"
 				row.html( row.html().replace(/(rentprice\[)[0-9]+(\])/gm, '$1'+n+'$2') );
+				$('input', row).val(null);
 				// Insert the copy into the DOM
-				$(this).before( row.attr('id', n) );
+				$(this).before( row.attr('id', 'rentRow' + n ) );
 			});
 		});
 	</script>
