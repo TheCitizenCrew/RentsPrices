@@ -13,10 +13,13 @@ L'idée est de permettre des études à partir de données déclarées (crowdsou
 
 ## RoadMap
 
+issues: #1 #2
+issues: TheCitizenCrew/RentsPrices#1, TheCitizenCrew/RentsPrices#2
+
 - [x] Choose frameworks
 - [ ] Rent input
-  - [ ] form for Rent & Rent Prices
-    - [ ] Map location of the rent's address
+  - [ ] form for Rent & Rent Prices #1 #2
+  - [ ] Map location of the rent's address
 - [ ] Display Rents
   - [ ] on a map
   - [ ] export data on query
