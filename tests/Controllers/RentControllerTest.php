@@ -7,13 +7,9 @@ class RentControllerTest extends \TestCase
 	public function testSimple()
 	{
 		$response = $this->call('GET', '/');
-		error_log( gettype($response));
-		error_log( get_class($response));
+		//error_log( gettype($response));
+		//error_log( get_class($response));
 
-		$response = $this->call('POST', '/');
-		error_log( gettype($response));
-		error_log( get_class($response));
-		
 	}
 
 	public function ZZZtestSave()
