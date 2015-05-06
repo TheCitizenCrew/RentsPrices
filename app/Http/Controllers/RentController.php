@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Validator;
 class RentController extends BaseController
 {
 
+	public function show($id)
+	{
+error_log( __METHOD__);
+		return view( 'rentShow', [ 'rent' => \App\Models\Rent::findOrFail( $id ) ] );
+	}
+
 	/**
 	 * Edit a new Rent.
 	 *
@@ -18,6 +24,7 @@ class RentController extends BaseController
 	 */
 	public function editNew()
 	{
+error_log( __METHOD__);
 		return $this->edit( null );
 	}
 
@@ -29,7 +36,8 @@ class RentController extends BaseController
 	 */
 	public function edit( $id )
 	{
-		if( $id == null )
+error_log( __METHOD__);
+		if( empty($id) )
 		{
 			$rent = new \App\Models\Rent();
 		}
@@ -48,7 +56,33 @@ class RentController extends BaseController
 	 */
 	public function save( Request $request )
 	{
+error_log( __METHOD__);
 		return $this->update( $request, null );
+	}
+
+	public function update2( Request $request, $id )
+	{
+		// Create a new Rent or retreive the one with $id
+		if( empty($id) )
+		{
+			$rent = new \App\Models\Rent( $request->all() );
+		}
+		else
+		{
+			$rent = \App\Models\Rent::findOrFail( $id );
+			$rent->fill( $request->all() );
+		}
+
+		$validator = Validator::make( $request->all(), \App\Models\Rent::$rules );
+		if( $validator->fails() )
+		{
+			//return redirect()->back()->withInput( ['rent'=> $rent])->withErrors( $validator );
+			return view( 'rentEdit', [ 'rent' => $rent ] )->withErrors( $validator->errors()->getMessages() );				
+		}
+
+		$rent->save();
+
+		return  redirect('/rent/'.$rent->id);
 	}
 
 	/**
@@ -60,9 +94,11 @@ class RentController extends BaseController
 	 */
 	public function update( Request $request, $id )
 	{
+error_log( __METHOD__);
 
 		// Create a new Rent or retreive the one with $id
-		if( $id == null )
+
+		if( empty($id) )
 		{
 			$rent = new \App\Models\Rent( $request->all() );
 		}
@@ -83,31 +119,33 @@ class RentController extends BaseController
 			// return redirect()->back()->withErrors( $validator->errors() );
 			$errors = array_merge( $errors, $validator->errors()->getMessages() );
 		}
-		
+
 		// RentPrices validation
 
 		$rentPricesNew = array ();
-		$this->updateProcessRentPrices( $request, $rent, $errors, $rentPricesNew );
+//		$this->updateProcessRentPrices( $request, $rent, $errors, $rentPricesNew );
 
-		if( count( $errors ) == 0 )
+		if( count( $errors ) > 0 )
 		{
-			DB::transaction( 
-				function () use(&$rent ,$rentPricesNew)
-				{
-					$rent->push();
-					$rent->prices()->saveMany( $rentPricesNew );
-				} );
+error_log( var_export($errors,true) );
+			return view( 'rentEdit', [ 'rent' => $rent ] )->withErrors( $errors );
 		}
-		else
-		{
-			return redirect()->back()->withErrors( $errors );
-		}
+
+		DB::transaction(
+			function () use($rent ,$rentPricesNew)
+			{
+				//					$rent->push();
+				//					$rent->prices()->saveMany( $rentPricesNew );
+				$rent->save();
+			}
+		);
 
 		// Le saveMany() n'associe pas les nouveaux children, il faut reloader
 		//$rent->load('prices');
 		//return view( 'rentEdit', [ 'rent' => $rent ] );
-
-		return redirect()->back();
+error_log( 'rent id:'.$rent->id );
+		
+		return  redirect('/rent/'.$rent->id);
 	}
 
 	/**

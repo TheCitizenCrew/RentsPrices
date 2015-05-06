@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rent extends Model
 {
+	use DatePresenter ;
 	/**
 	 * The fillable property specifies which attributes should be mass-assignable.
 	 * @var array
