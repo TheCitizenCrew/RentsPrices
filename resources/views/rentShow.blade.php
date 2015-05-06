@@ -4,7 +4,11 @@
 
 @section('content')
 
-<table>
+<h1>Logement</h1>
+
+<h2>Adresse</h2>
+
+<table class="table">
 <tr><td>Logement</td><td>@if($rent->buildingIndividual==1) collectif @else	individuel @endif</td></tr>
 <tr><td>Étage</td><td>{{$rent->buildingStage}}</td></tr>
 <tr><td>Nom</td><td>{{$rent->buildingName}}</td></tr>
@@ -15,7 +19,9 @@
 <tr><td>Mise à jour le</td><td>{{$rent->updated_at}}</td></tr>
 </table>
 
-<table>
+<h2>Loyers</h2>
+
+<table class="table">
 @foreach($rent->prices as $rentPrice)
 <tr><td>{{$rentPrice->year}}</td><td>{{$rentPrice->price}}</td></tr>
 @endforeach
