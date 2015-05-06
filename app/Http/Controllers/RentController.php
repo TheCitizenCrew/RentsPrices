@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use DB;
 use Illuminate\Support\Facades\Validator;
-use Monolog\Handler\error_log;
+use App\Models\RentPrice;
 
 class RentController extends BaseController
 {
@@ -96,36 +96,111 @@ class RentController extends BaseController
 		$validator = Validator::make( $request->all(), \App\Models\Rent::$rules );
 		if( $validator->fails() )
 		{
-			// return redirect()->back()->withErrors( $validator->errors() );
 			$errors = array_merge( $errors, $validator->errors()->getMessages() );
 		}
 
 		// RentPrices validation
 
-		$this->updateProcessRentPrices( $request, $rent, $errors );
+		$rentPricesToDelete = $this->updateProcessRentPrices( $request, $rent, $errors );
 
 		if( count( $errors ) > 0 )
 		{
-error_log( var_export($errors,true) );
 			return view( 'rentEdit', [ 'rent' => $rent ] )->withErrors( $errors );
 		}
 
 		DB::transaction(
-			function () use($rent)
+			function () use($rent, $rentPricesToDelete)
 			{
 				$rent->push();
-				//					$rent->prices()->saveMany( $rentPricesNew );
-				//$rent->save();
+				RentPrice::destroy($rentPricesToDelete);
 			}
 		);
-
-		// Le saveMany() n'associe pas les nouveaux children, il faut reloader
-		//$rent->load('prices');
-		//return view( 'rentEdit', [ 'rent' => $rent ] );
 		
 		return  redirect('/rent/'.$rent->id);
 	}
 
+	/**
+	 * Remove unused relation item ((without touching the DB),
+	 * Validate RentPrice data,
+	 * rewrite error message's key to match input field postion
+	 * update $rent with modified relation item (without touching the DB),
+	 *  
+	 * @param Request $request
+	 * @param \App\Models\Rent $rent
+	 * @param string[] $errors
+	 * @return int[] ids to delete
+	 */
+	protected function updateProcessRentPrices( Request $request, \App\Models\Rent $rent, array &$errors )
+	{
+		$rentPricesToDelete = array();
+
+		$rpIdx = 0 ;
+		foreach( $request->get( 'rentprice' ) as $rp )
+		{
+			// If data empty, delete the item
+			if( $rp['year']=='' && $rp['price']=='')
+			{
+				if( $rp['id'] > 0 )
+				{
+					// if data exists in DB, remember to delete it
+					$rentPricesToDelete[] = $rp['id'];
+					for( $i=0; $i<count($rent->prices); $i++)
+					{
+						if( $rent->prices[$i]->id == $rp['id'] )
+						{
+							unset($rent->prices[$i]);
+						}
+					}
+				}
+				// continue because it's a removed item
+				continue ;
+			}
+
+			// Validate inputs
+
+			$validator = Validator::make( $rp, \App\Models\RentPrice::$rules );
+			if( $validator->fails() )
+			{
+				// Store validation errors
+				$errors = array_merge(
+					$errors,
+					$this->rentPriceFormatErrorMessage($validator->errors()->getMessages(), $rpIdx)
+				);
+
+			}
+
+			if( $rp['id'] > 0 )
+			{
+				// Update the existing rentPrice, without touching the DB !
+				foreach( $rent->prices as $price )
+				{
+					if( $price->id == $rp['id'] )
+					{
+						$price->fill( $rp );
+					}
+				}
+			}
+			else
+			{
+				// Add new relation item without saving in DB !
+				$rentPrice = new \App\Models\RentPrice( $rp );
+				$rentPrice->rent_id = $rent->id ;
+				$rent->prices[] = $rentPrice;
+			}
+
+			$rpIdx ++ ;
+		}
+
+		return $rentPricesToDelete ;
+	}
+
+	/**
+	 * Suffixes error message key with $rpIdx to match item's form postion.
+	 * 
+	 * @param array $errors
+	 * @param int $rpIdx
+	 * @return array
+	 */
 	protected function rentPriceFormatErrorMessage( array $errors, $rpIdx )
 	{
 		if( isset($errors['year']) )
@@ -139,60 +214,6 @@ error_log( var_export($errors,true) );
 			unset($errors['price']);
 		}
 		return $errors ;
-	}
-
-	/**
-	 * Validate RentPrice data,
-	 * rewrite error message's key,
-	 * update $rent with modified RentPrices,
-	 * store new RentPrices in $rentPricesNew.
-	 *  
-	 * @param Request $request
-	 * @param \App\Models\Rent $rent
-	 * @param string[] $errors
-	 * @param array $rentPricesNew
-	 */
-	protected function updateProcessRentPrices( Request $request, \App\Models\Rent $rent, array &$errors )
-	{
-error_log(__METHOD__.' 1. rents->prices count = '.count($rent->prices));
-
-		$rpIdx = 0 ;
-		foreach( $request->get( 'rentprice' ) as $rp )
-		{
-error_log( $rpIdx.', year: '.$rp['year']);
-			$validator = Validator::make( $rp, \App\Models\RentPrice::$rules );
-			if( $validator->fails() )
-			{
-error_log( $rpIdx.', error year: '.$rp['year']);
-				$errors = array_merge(
-					$errors,
-					$this->rentPriceFormatErrorMessage($validator->errors()->getMessages(), $rpIdx)
-				);
-
-			}
-
-			if( !empty($rp['id']) )
-			{
-				foreach( $rent->prices as $price )
-				{
-					if( $price->id == $rp['id'] )
-					{
-						$price->fill( $rp );
-					}
-				}
-			}
-			else
-			{
-				// Add relation item without saving in DB !
-				$rentPrice = new \App\Models\RentPrice( $rp );
-				$rentPrice->rent_id = $rent->id ;
-				$rent->prices[] = $rentPrice;
-			}
-
-			$rpIdx ++ ;
-		}
-		
-error_log(__METHOD__.' 2. rents->prices count = '.count($rent->prices));
 	}
 
 }
