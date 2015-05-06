@@ -144,11 +144,12 @@ class RentController extends BaseController
 				{
 					// if data exists in DB, remember to delete it
 					$rentPricesToDelete[] = $rp['id'];
-					for( $i=0; $i<count($rent->prices); $i++)
+					// and remove item from the rent
+					foreach( $rent->prices as $k => $v )
 					{
-						if( $rent->prices[$i]->id == $rp['id'] )
+						if( $v->id == $rp['id'] )
 						{
-							unset($rent->prices[$i]);
+							unset($rent->prices[$k]);
 						}
 					}
 				}
