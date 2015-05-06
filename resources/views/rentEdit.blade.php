@@ -4,6 +4,7 @@
 @section('title', 'Ajouter un loyer')
 
 @section('content')
+
 	<h1>Ajouter un loyer</h1>
     
 	@if (! $errors->isEmpty())

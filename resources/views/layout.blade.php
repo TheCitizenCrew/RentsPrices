@@ -17,21 +17,30 @@
     <body role="document">
 
 		<nav class="navbar navbar-inverse navbar-fixed-top">
-			<div class="container">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="/">Prix des Loyers</a>
+			<div class="container-fluid">
+
+				<div class="navbar-header">					
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-items-collapse">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand " href="/">Prix des Loyers</a>
 				</div>
-				<div id="navbar" class="">
-					<ul class="nav navbar-nav">
-						<!-- li class="active"><a href="#">Home</a></li -->
-						<li><a href="/rent">Ajouter</a></li>
-						<li><a href="/#about">À propos</a></li>
+
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="navbar-items-collapse" >
+		      <ul class="nav navbar-nav">
+		        <li ><a href="/rent">Ajouter un loyer<span class="sr-only">(current)</span></a></li>
+		        <li><a href="/about">À propos</a></li>
 					</ul>
 				</div>
+
 			</div>
 		</nav>
 
-		<div class="container" role="main">
+		<div class="container-fluid" role="main">
 			
 			@yield('content')
 
