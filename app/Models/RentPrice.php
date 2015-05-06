@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
   
 class RentPrice extends Model
 {
-	protected $fillable = ['id', 'year', 'price'];
+	protected $fillable = ['year', 'price'];
 	
 	public static $rules = [
 			'year'=>'required|numeric',

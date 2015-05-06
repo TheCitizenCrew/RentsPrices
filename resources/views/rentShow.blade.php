@@ -15,6 +15,11 @@
 <tr><td>Mise à jour le</td><td>{{$rent->updated_at}}</td></tr>
 </table>
 
+<table>
+@foreach($rent->prices as $rentPrice)
+<tr><td>{{$rentPrice->year}}</td><td>{{$rentPrice->price}}</td></tr>
+@endforeach
+</table>
 <a href="/rent/{{ $rent->id }}/edit"><button>Éditer</button></a>
 
 @stop

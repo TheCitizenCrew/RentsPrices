@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use DB;
 use Illuminate\Support\Facades\Validator;
+use Monolog\Handler\error_log;
 
 class RentController extends BaseController
 {
 
 	public function show($id)
 	{
-error_log( __METHOD__);
 		return view( 'rentShow', [ 'rent' => \App\Models\Rent::findOrFail( $id ) ] );
 	}
 
@@ -24,7 +24,6 @@ error_log( __METHOD__);
 	 */
 	public function editNew()
 	{
-error_log( __METHOD__);
 		return $this->edit( null );
 	}
 
@@ -36,7 +35,6 @@ error_log( __METHOD__);
 	 */
 	public function edit( $id )
 	{
-error_log( __METHOD__);
 		if( empty($id) )
 		{
 			$rent = new \App\Models\Rent();
@@ -44,7 +42,16 @@ error_log( __METHOD__);
 		else
 		{
 			$rent = \App\Models\Rent::findOrFail( $id );
+			$rent->load('prices');
 		}
+
+		if( count($rent->prices) == 0 )
+		{
+			// Add an empty one
+			$rentPrice = new \App\Models\RentPrice();
+			$rent->prices[] = $rentPrice;
+		}
+
 		return view( 'rentEdit', [ 'rent' => $rent ] );
 	}
 
@@ -56,33 +63,7 @@ error_log( __METHOD__);
 	 */
 	public function save( Request $request )
 	{
-error_log( __METHOD__);
 		return $this->update( $request, null );
-	}
-
-	public function update2( Request $request, $id )
-	{
-		// Create a new Rent or retreive the one with $id
-		if( empty($id) )
-		{
-			$rent = new \App\Models\Rent( $request->all() );
-		}
-		else
-		{
-			$rent = \App\Models\Rent::findOrFail( $id );
-			$rent->fill( $request->all() );
-		}
-
-		$validator = Validator::make( $request->all(), \App\Models\Rent::$rules );
-		if( $validator->fails() )
-		{
-			//return redirect()->back()->withInput( ['rent'=> $rent])->withErrors( $validator );
-			return view( 'rentEdit', [ 'rent' => $rent ] )->withErrors( $validator->errors()->getMessages() );				
-		}
-
-		$rent->save();
-
-		return  redirect('/rent/'.$rent->id);
 	}
 
 	/**
@@ -94,8 +75,6 @@ error_log( __METHOD__);
 	 */
 	public function update( Request $request, $id )
 	{
-error_log( __METHOD__);
-
 		// Create a new Rent or retreive the one with $id
 
 		if( empty($id) )
@@ -106,6 +85,7 @@ error_log( __METHOD__);
 		{
 			$rent = \App\Models\Rent::findOrFail( $id );
 			$rent->fill( $request->all() );
+			$rent->load('prices');
 		}
 
 		// to store the differents validators errors
@@ -122,8 +102,7 @@ error_log( __METHOD__);
 
 		// RentPrices validation
 
-		$rentPricesNew = array ();
-//		$this->updateProcessRentPrices( $request, $rent, $errors, $rentPricesNew );
+		$this->updateProcessRentPrices( $request, $rent, $errors );
 
 		if( count( $errors ) > 0 )
 		{
@@ -132,20 +111,34 @@ error_log( var_export($errors,true) );
 		}
 
 		DB::transaction(
-			function () use($rent ,$rentPricesNew)
+			function () use($rent)
 			{
-				//					$rent->push();
+				$rent->push();
 				//					$rent->prices()->saveMany( $rentPricesNew );
-				$rent->save();
+				//$rent->save();
 			}
 		);
 
 		// Le saveMany() n'associe pas les nouveaux children, il faut reloader
 		//$rent->load('prices');
 		//return view( 'rentEdit', [ 'rent' => $rent ] );
-error_log( 'rent id:'.$rent->id );
 		
 		return  redirect('/rent/'.$rent->id);
+	}
+
+	protected function rentPriceFormatErrorMessage( array $errors, $rpIdx )
+	{
+		if( isset($errors['year']) )
+		{
+			$errors['year'.$rpIdx] = $errors['year'] ;
+			unset($errors['year']);
+		}
+		if( isset($errors['price']) )
+		{
+			$errors['price'.$rpIdx] = $errors['price'] ;
+			unset($errors['price']);
+		}
+		return $errors ;
 	}
 
 	/**
@@ -159,54 +152,47 @@ error_log( 'rent id:'.$rent->id );
 	 * @param string[] $errors
 	 * @param array $rentPricesNew
 	 */
-	protected function updateProcessRentPrices( Request $request, \App\Models\Rent $rent, array &$errors, array &$rentPricesNew )
+	protected function updateProcessRentPrices( Request $request, \App\Models\Rent $rent, array &$errors )
 	{
+error_log(__METHOD__.' 1. rents->prices count = '.count($rent->prices));
+
 		$rpIdx = 0 ;
 		foreach( $request->get( 'rentprice' ) as $rp )
 		{
+error_log( $rpIdx.', year: '.$rp['year']);
 			$validator = Validator::make( $rp, \App\Models\RentPrice::$rules );
 			if( $validator->fails() )
 			{
-				// return redirect()->back()->withErrors( $validator->errors(), 'rentprice'.count($rpos) );
-		
-				$errs = $validator->errors()->getMessages();
+error_log( $rpIdx.', error year: '.$rp['year']);
+				$errors = array_merge(
+					$errors,
+					$this->rentPriceFormatErrorMessage($validator->errors()->getMessages(), $rpIdx)
+				);
 
-				if( isset($errs['year']) )
-				{
-					$errs['year'.count($rpIdx)] = $errs['year'] ;
-					unset($errs['year']);
-				}
-				if( isset($errs['price']) )
-				{
-					$errs['price'.count($rpIdx)] = $errs['price'] ;
-					unset($errs['price']);
-				}
-		
-				$errors = array_merge( $errors, $errs );
 			}
-				
-			$o = new \App\Models\RentPrice( $rp );
-			if( !empty($o->id) )
+
+			if( !empty($rp['id']) )
 			{
 				foreach( $rent->prices as $price )
 				{
-					// pour que l'id soit affecté, il faut l'ajouter dans Model::$fillable
-					if( $price->id == $o->id )
+					if( $price->id == $rp['id'] )
 					{
-						$price->fill( $o->toArray() );
+						$price->fill( $rp );
 					}
 				}
 			}
 			else
 			{
-				// un id null fait planter le sql de saveMany()
-				unset( $o->id );
-				$rentPricesNew[] = $o;
+				// Add relation item without saving in DB !
+				$rentPrice = new \App\Models\RentPrice( $rp );
+				$rentPrice->rent_id = $rent->id ;
+				$rent->prices[] = $rentPrice;
 			}
-		
+
 			$rpIdx ++ ;
 		}
 		
+error_log(__METHOD__.' 2. rents->prices count = '.count($rent->prices));
 	}
 
 }

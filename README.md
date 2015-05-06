@@ -38,8 +38,6 @@ Use "[composer](https://getcomposer.org/)".
 #### nginx
 
 	...
-	# remove trailing slash, but not for homepage
-	rewrite ^(.+)[/]$ $1 permanent;
 	location / {
 		try_files $uri $uri/ /index.php?$query_string ;
 	}

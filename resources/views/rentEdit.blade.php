@@ -4,21 +4,21 @@
 @section('title', 'Ajouter un loyer')
 
 @section('content')
-    <h1>Ajouter un loyer</h1>
+	<h1>Ajouter un loyer</h1>
     
 	@if (! $errors->isEmpty())
-		<p class="bg-warning">il y a des erreurs dans le formulaire.</p>
+	<p class="bg-warning">il y a des erreurs dans le formulaire.</p>
 	@endif				
 
 	@if(empty($rent->id))
-		<form class="form-horizontal" method="POST" action="/rent">
+	<form class="form-horizontal" method="POST" action="/rent">
 	@else
-		<form class="form-horizontal" method="POST" action="/rent/{{$rent->id}}">
+	<form class="form-horizontal" method="POST" action="/rent/{{$rent->id}}">
 	@endif
 		<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 
 		<h2>Adresse</h2>
-
+	
 		<div class="form-group">
 			<div class="checkbox">
 				<label>
@@ -29,7 +29,7 @@
 				</label>
 				<p class="help-block">La bâtiment héberge-t-il un (individuel) ou plusieurs logements (collectif).</p>
 				@if ($errors->first('buildingIndividual'))
-					<p class="text-danger">error {{$errors->first('buildingIndividual')}} </p>
+				<p class="text-danger">error {{$errors->first('buildingIndividual')}} </p>
 				@endif				
 			</div>
 		</div>
@@ -37,35 +37,35 @@
 			<label for="buildingStage">Étage</label>
 			<input type="text" class="form-control" name="buildingStage" id="buildingStage" placeholder="L'étage de l'appartement" value="{{$rent->buildingStage}}" />
 			@if ($errors->first('buildingStage'))
-				<p class="text-danger">error {{$errors->first('buildingStage')}} </p>
+			<p class="text-danger">error {{$errors->first('buildingStage')}} </p>
 			@endif				
 		</div>
 		<div class="form-group">
 			<label for="buildingName">Bâtiment</label>
 			<input type="text" class="form-control" name="buildingName" id="buildingName" placeholder="Le numéro ou nom du bâtiment" value="{{$rent->buildingName}}" />
 			@if ($errors->first('buildingName'))
-				<p class="text-danger">error {{$errors->first('buildingName')}} </p>
+			<p class="text-danger">error {{$errors->first('buildingName')}} </p>
 			@endif				
 		</div>
 		<div class="form-group">
 			<label for="street">Rue</label>
 			<input type="text" class="form-control" name="street" id="street" placeholder="Le numéro et nom de la rue" value="{{$rent->street}}" />
 			@if ($errors->first('street'))
-				<p class="text-danger">error {{$errors->first('street')}} </p>
+			<p class="text-danger">error {{$errors->first('street')}} </p>
 			@endif				
 		</div>
 		<div class="form-group">
 			<label for="zipcode">Code postal</label>
 			<input type="text" class="form-control" name="zipcode" id="zipcode" placeholder="Le code postal"  value="{{$rent->zipcode}}" />
 			@if ($errors->first('zipcode'))
-				<p class="text-danger">error {{$errors->first('zipcode')}} </p>
+			<p class="text-danger">error {{$errors->first('zipcode')}} </p>
 			@endif				
 		</div>
 		<div class="form-group">
 			<label for="city">Ville</label>
 			<input type="text" class="form-control" name="city" id="city" placeholder="La commune"  value="{{$rent->city}}" />
 			@if ($errors->first('city'))
-				<p class="text-danger">error {{$errors->first('city')}} </p>
+			<p class="text-danger">error {{$errors->first('city')}} </p>
 			@endif				
 		</div>
 
@@ -75,7 +75,7 @@
 
 		<div class="container" id="rents">
 			<?php $rowsCount = 0 ; ?>
-			@forelse($rent->prices as $price)
+			@foreach($rent->prices as $price)
 				<div class="row" id="rentRow">
 					<fieldset>
 					<input type="hidden" name="rentprice[{{$rowsCount}}][id]" value="{{$price->id}}" />
@@ -100,25 +100,7 @@
 					</fieldset>
 				</div>
 				<?php $rowsCount ++ ; ?>
-			@empty
-				<div class="row" id="rentRow">
-					<fieldset>
-					<input type="hidden" name="rentprice[{{$rowsCount}}][id]" value="" />
-						<div class="form-group">
-							<div class="col-xs-2">
-								<label >Année</label>
-								<input type="text" class="form-control" placeholder="L'année"
-									name="rentprice[{{$rowsCount}}][year]" value="" />
-							</div>
-							<div class="col-xs-2">
-								<label >Prix mensuel</label>
-								<input type="text" class="form-control" placeholder="Le prix mensuel"
-									name="rentprice[{{$rowsCount}}][price]" value="" />
-							</div>
-						</div>
-					</fieldset>
-				</div>
-			@endforelse
+			@endforeach
 
 			<button type="button" id="addRent" class="btn btn-default">Ajouter une année</button>
 		</div>
