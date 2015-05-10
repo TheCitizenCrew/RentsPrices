@@ -46,13 +46,13 @@
 		</nav>
 
 		<div class="container-fluid" role="main">
-			
+
 			@yield('content')
 
 		</div>
 
 		<br/>
-		<div class="container" role="footer">
+		<div class="container-fuild" role="footer">
 			<blockquote>
 				<footer>
 					&copy; 2015 <a href="https://github.com/TheCitizenCrew">The Citizen Crew & Co</a><br/>
