@@ -30,16 +30,22 @@
 
 		$(function() {
 
+			// Construct the Lealfet Map
+
 			map = L.map('map', {
 				 loadingControl: true
 			}).setView([47.37760, 0.67961], 17);
+			// remove map's pane to avoid map moves while scrolling the page
 			map.scrollWheelZoom.disable();
 			map.touchZoom.disable();
-			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-			    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+			    attribution: 'Data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, <a href="http://mapquest.com">MapQuest</a>-OSM Tiles',
+			    subdomains: ['otile1','otile2', 'otile3', 'otile4']
 			}).addTo(map);
 
-			$( "#street, #zipcode, #city" ).focusout(function()
+			// Catch lost focus on some form's inputs
+
+			$( "#street, #zipcode, #city, #country" ).focusout(function()
 			{
 				if( $('#street').val() !='' && $('#zipcode').val() != '' && $('#city').val() != '' )
 				{
@@ -47,16 +53,16 @@
 				}
 			});
 
-		});
+			// Place the map on previously recorded location
+			var lat = $('#addrlat').val(),
+				lng = $('#addrlng').val();
+			if( lat!=0 && lng!=0 )
+			{
+				createGeoMarker( lat, lng );
+				map.setView( geocodeMarker.getLatLng(), 18);
+			}
 
-		function geocodeAddress()
-		{
-			var addr = $('#street').val()+', '+$('#zipcode').val()+', '+$('#city').val();
-			console.log('essai_geocode()');
-			map.fire('dataloading');
-			geocoder.geocode( addr, geocodeResult, null );
-			
-		}
+		});
 
 		function centerOnAddress()
 		{
@@ -66,10 +72,20 @@
 			}
 		}
 
+		/**
+		 * Construct the address string and call the geocoder
+		 */
+		function geocodeAddress()
+		{
+			var addr = $('#street').val()+', '+$('#zipcode').val()+', '+$('#city').val()+', '+$('#country').val();
+			map.fire('dataloading');
+			geocoder.geocode( addr, geocodeResult, null );			
+		}
+
 		function geocodeResult(data)
 		{
 			map.fire('dataload');
-			
+
 			result = data[0];
 			console.log(result);
 			map.fitBounds(result.bbox);
@@ -83,17 +99,23 @@
 			}
 			else
 			{
-				geocodeMarker = new L.Marker(result.center, {
-					draggable: true
-					})
-				.on('dragend', function(){
-					map.setView( geocodeMarker.getLatLng(), 18);
-					$('#addrlat').val( geocodeMarker.getLatLng().lat );
-					$('#addrlng').val( geocodeMarker.getLatLng().lng );
-				})
-				.addTo(map);
+				createGeoMarker( result.center.lat, result.center.lng );
 			}
 		
+		}
+
+		function createGeoMarker( lat, lng )
+		{
+			geocodeMarker = new L.Marker( [lat, lng], {
+				draggable: true
+				})
+			.on('dragend', function(){
+				map.setView( geocodeMarker.getLatLng(), 18);
+				$('#addrlat').val( geocodeMarker.getLatLng().lat );
+				$('#addrlng').val( geocodeMarker.getLatLng().lng );
+			})
+			.addTo(map);
+
 		}
 
 	</script>
