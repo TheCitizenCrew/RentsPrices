@@ -1281,16 +1281,16 @@
         },
         {
             "name": "laravel/lumen-framework",
-            "version": "v5.0.8",
+            "version": "v5.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/lumen-framework.git",
-                "reference": "a5789dcb535434659489cbe15d07d93861ba131a"
+                "reference": "b7734d6151ae3809db93d8fc30d1ed5d3541b84e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/lumen-framework/zipball/a5789dcb535434659489cbe15d07d93861ba131a",
-                "reference": "a5789dcb535434659489cbe15d07d93861ba131a",
+                "url": "https://api.github.com/repos/laravel/lumen-framework/zipball/b7734d6151ae3809db93d8fc30d1ed5d3541b84e",
+                "reference": "b7734d6151ae3809db93d8fc30d1ed5d3541b84e",
                 "shasum": ""
             },
             "require": {
@@ -1365,7 +1365,7 @@
                 "laravel",
                 "lumen"
             ],
-            "time": "2015-04-27 14:47:54"
+            "time": "2015-05-08 12:58:04"
         },
         {
             "name": "league/flysystem",
@@ -1569,21 +1569,21 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.18.0",
+            "version": "1.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "99e2f69f7bdc2cc4334b2d00f1e0ba450623ea36"
+                "reference": "68868e0b02d2d803d0052a59d4e5003cccf87320"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/99e2f69f7bdc2cc4334b2d00f1e0ba450623ea36",
-                "reference": "99e2f69f7bdc2cc4334b2d00f1e0ba450623ea36",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/68868e0b02d2d803d0052a59d4e5003cccf87320",
+                "reference": "68868e0b02d2d803d0052a59d4e5003cccf87320",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "symfony/translation": "2.6.*"
+                "symfony/translation": "~2.6"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0"
@@ -1612,7 +1612,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2015-03-26 03:05:57"
+            "time": "2015-05-09 03:23:44"
         },
         {
             "name": "nikic/fast-route",
