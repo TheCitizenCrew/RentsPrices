@@ -11,7 +11,7 @@ class Rent extends Model
 	 * The fillable property specifies which attributes should be mass-assignable.
 	 * @var array
 	 */
-	protected $fillable = ['id', 'buildingIndividual', 'buildingStage', 'buildingName', 'street', 'zipcode', 'city'];
+	protected $fillable = ['id', 'buildingIndividual', 'buildingStage', 'buildingName', 'street', 'zipcode', 'city', 'country', 'addrlat', 'addrlng'];
 
 	public static $rules = [
 		'buildingIndividual'=>'required|boolean',
@@ -19,7 +19,10 @@ class Rent extends Model
 		'buildingName'=>'',
 		'street'=>'required',
 		'zipcode'=>'required',
-		'city'=>'required'
+		'city'=>'required',
+		'country'=>'required',
+		'addrlat'=>'required',
+		'addrlng'=>'required'
 	];
 
 	/**
