@@ -5,11 +5,10 @@
 
 @section('content')
 
-
 	<div class="container-fluid">
 
 	<h1>Ajouter un loyer</h1>
-    
+
 	@if (! $errors->isEmpty())
 	<p class="bg-warning">il y a des erreurs dans le formulaire.</p>
 	@endif
@@ -20,9 +19,9 @@
 		<form class="form-horizontal" method="POST" action="/rent/{{$rent->id}}">
 		@endif
 			<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-		
+
 			<h2>Adresse</h2>
-		
+
 			<div class="container">
 				<div class="form-group @if($errors->first('buildingIndividual'))has-error @endif">
 					<div class="checkbox">
@@ -54,35 +53,42 @@
 					<input type="text" class="form-control" name="buildingName" id="buildingName" placeholder="Le numéro ou nom du bâtiment" value="{{$rent->buildingName}}" />
 					@if ($errors->first('buildingName'))
 					<p class="text-danger">error {{$errors->first('buildingName')}} </p>
-					@endif				
+					@endif
 				</div>
 				<div class="form-group @if($errors->first('street'))has-error @endif">
 					<label for="street" class="control-label">Rue</label>
 					<input type="text" class="form-control" name="street" id="street" placeholder="Le numéro et nom de la rue" value="{{$rent->street}}" />
 					@if ($errors->first('street'))
 					<p class="text-danger">error {{$errors->first('street')}} </p>
-					@endif				
+					@endif
 				</div>
 				<div class="form-group @if($errors->first('city'))has-error @endif">
 					<label for="zipcode" class="control-label">Code postal</label>
 					<input type="text" class="form-control" name="zipcode" id="zipcode" placeholder="Le code postal"  value="{{$rent->zipcode}}" />
 					@if ($errors->first('zipcode'))
 					<p class="text-danger">error {{$errors->first('zipcode')}} </p>
-					@endif				
+					@endif
 				</div>
 				<div class="form-group">
 					<label for="city" class="control-label">Ville</label>
 					<input type="text" class="form-control" name="city" id="city" placeholder="La commune"  value="{{$rent->city}}" />
 					@if ($errors->first('city'))
 					<p class="text-danger">error {{$errors->first('city')}} </p>
-					@endif				
+					@endif
+				</div>
+				<div class="form-group">
+					<label for="country" class="control-label">Pays</label>
+					<input type="text" class="form-control" name="country" id="country" placeholder="Le Pays"  value="{{$rent->country}}" />
+					@if ($errors->first('country'))
+					<p class="text-danger">error {{$errors->first('country')}} </p>
+					@endif
 				</div>
 
 				<p>La position géographique de l'adresse du logement a été calculée automatiquement.
 				Vous pouvez la corriger en déplacement le marqueur bleu.</p>
-			
+
 				@include('rentEdit-map')
-	
+
 				<div class="form-group col-md-3">
 					<label for="addrlat" class="control-label">Lattitude</label>
 					<input type="text" class="form-control" name="addrlat" id="addrlat" placeholder="latitude"  value="{{$rent->addrlat}}" />
@@ -101,9 +107,9 @@
 			</div>
 
 			<h2>Loyers</h2>
-		
-			<p>Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Nam dictum, odio nec pretium volutpat.</p>
-		
+
+			<p>Indiquez les loyers par année.</p>
+
 			<div class="container" id="rents">
 				<?php $rowsCount = 0 ; ?>
 				@foreach($rent->prices as $price)

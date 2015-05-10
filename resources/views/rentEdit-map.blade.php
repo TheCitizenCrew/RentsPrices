@@ -1,7 +1,7 @@
 @section('css')
 	@parent
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-	<link rel="stylesheet" href="//cdn.rawgit.com/ebrelsford/Leaflet.loading/master/src/Control.Loading.css" />
+	<link rel="stylesheet" href="//cdn.rawgit.com/ebrelsford/Leaflet.loading/v0.1.16/src/Control.Loading.css" />
 
 	<style type="text/css">
 		#map {
@@ -13,13 +13,14 @@
 	</style>
 @stop
 
+<button type="button" onclick="geocodeAddress();">localiser l'adresse</button>
 <button type="button" onclick="centerOnAddress();">Center sur l'adresse</button>
 <div id="map"></div>
 
 @section('javascript')
 	@parent
 	<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-	<script src="//cdn.rawgit.com/ebrelsford/Leaflet.loading/master/src/Control.Loading.js"></script>
+	<script src="//cdn.rawgit.com/ebrelsford/Leaflet.loading/v0.1.16/src/Control.Loading.js"></script>
 	<script src="/Geocoder.AddOk.js"></script>
 
 	<script>
@@ -42,19 +43,27 @@
 			{
 				if( $('#street').val() !='' && $('#zipcode').val() != '' && $('#city').val() != '' )
 				{
-					centerOnAddress();
+					geocodeAddress();
 				}
 			});
 
 		});
 
-		function centerOnAddress()
+		function geocodeAddress()
 		{
 			var addr = $('#street').val()+', '+$('#zipcode').val()+', '+$('#city').val();
 			console.log('essai_geocode()');
 			map.fire('dataloading');
 			geocoder.geocode( addr, geocodeResult, null );
 			
+		}
+
+		function centerOnAddress()
+		{
+			if( geocodeMarker )
+			{
+				map.setView( geocodeMarker.getLatLng(), 18);
+			}
 		}
 
 		function geocodeResult(data)
@@ -76,7 +85,13 @@
 			{
 				geocodeMarker = new L.Marker(result.center, {
 					draggable: true
-					}).addTo(map);
+					})
+				.on('dragend', function(){
+					map.setView( geocodeMarker.getLatLng(), 18);
+					$('#addrlat').val( geocodeMarker.getLatLng().lat );
+					$('#addrlng').val( geocodeMarker.getLatLng().lng );
+				})
+				.addTo(map);
 			}
 		
 		}
