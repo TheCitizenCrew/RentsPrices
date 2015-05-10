@@ -62,7 +62,7 @@
 			loadData( url );
 		});
 
-		map		.setView([45.936, 10.481], 5);
+		map.setView([45.936, 10.481], 5);
 		
 	});
 
@@ -73,17 +73,22 @@
 			data.forEach( function(rent) {
 				//console.log(rent);
 				var marker = L.marker( L.latLng(rent.addrlat, rent.addrlng), { rent_id: rent.id });
-				if( rent.buildingIndividual )
+				if( rent.buildingIndividual > 0 )
 				{
 					marker.bindPopup( '<b>Logement individuel</b><br/>'
-						+ rent.street+', '+rent.zipcode+', '+rent.city+', '+rent.country
+						+ rent.street + ', ' + rent.zipcode +', ' + rent.city + ', ' + rent.country
+						+ '<br/>' + '<a href="/rent/'+rent.id+'">voir</a>'
+						+ ' - ' + '<a href="/rent/'+rent.id+'/edit">éditer</a>'
 					);
 				}
 				else
 				{
 					marker.bindPopup( '<b>Logement collectif</b><br/>'
-						+ rent.buildingStage+', '+rent.buildingName+'<br/>'
-						+ rent.street+', '+rent.zipcode+', '+rent.city+', '+rent.country
+						+ 'étage: '+rent.buildingStage
+						+ (rent.buildingName != '' ? ', bâtiment: '+rent.buildingName : '' )
+						+ '<br/>' + rent.street + '<br/>' + rent.zipcode + ', ' + rent.city + ', ' + rent.country
+						+ '<br/>' + '<a href="/rent/'+rent.id+'">voir</a>'
+						+ ' - ' + '<a href="/rent/'+rent.id+'/edit">éditer</a>'
 					);
 				}
 				markers.addLayer(marker);
