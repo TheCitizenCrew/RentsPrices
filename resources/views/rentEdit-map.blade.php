@@ -13,8 +13,13 @@
 	</style>
 @stop
 
-<button type="button" onclick="geocodeAddress();">localiser l'adresse</button>
-<button type="button" onclick="centerOnAddress();">Center sur l'adresse</button>
+
+<a id="locateAddress" tabindex="0" class="btn btn-default " role="button" onclick="geocodeAddress();" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" >
+localiser l'adresse</a>
+
+<a id="centerAddress" tabindex="0" class="btn btn-default " role="button" onclick="centerOnAddress();" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" data-title="Attention:" >
+Center sur l'adresse</a>
+
 <div id="map"></div>
 
 @section('javascript')
@@ -25,8 +30,9 @@
 
 	<script>
 
-		var map, geocodeMarker;
-		var geocoder = new GeocoderAddOk( {limit: 10 } );
+		var map, geocodeMarker,
+			geocoder = new GeocoderAddOk( {limit: 10 } )
+			zoom = 17 ;
 
 		$(function() {
 
@@ -34,7 +40,7 @@
 
 			map = L.map('map', {
 				 loadingControl: true
-			}).setView([47.37760, 0.67961], 17);
+			}).setView([45.936, 10.481], 5);
 			// remove map's pane to avoid map moves while scrolling the page
 			map.scrollWheelZoom.disable();
 			map.touchZoom.disable();
@@ -59,7 +65,7 @@
 			if( lat!=0 && lng!=0 )
 			{
 				createGeoMarker( lat, lng );
-				map.setView( geocodeMarker.getLatLng(), 18);
+				map.setView( geocodeMarker.getLatLng(), zoom);
 			}
 
 		});
@@ -68,8 +74,10 @@
 		{
 			if( geocodeMarker )
 			{
-				map.setView( geocodeMarker.getLatLng(), 18);
+				map.setView( geocodeMarker.getLatLng(), zoom);
+				reutrn ;
 			}
+			$('#centerAddress').popover('show');
 		}
 
 		/**
@@ -77,17 +85,32 @@
 		 */
 		function geocodeAddress()
 		{
-			var addr = $('#street').val()+', '+$('#zipcode').val()+', '+$('#city').val()+', '+$('#country').val();
+			var addr = [];
+			for( var input in ['#street', '#zipcode', '#city', '#country'] )
+			{
+				var v = $(input).val() ;
+				if( v == undefined || v.trim() == '' )
+					continue ;
+				addr.push( v );
+			}
+			if( addr.length == 0 )
+			{
+				$('#locateAddress').popover('show');
+				return ;
+			}
 			map.fire('dataloading');
-			geocoder.geocode( addr, geocodeResult, null );			
+			geocoder.geocode( addr.join(','), geocodeResult, null );			
 		}
 
 		function geocodeResult(data)
 		{
 			map.fire('dataload');
 
+			if( data[0] == undefined )
+			{
+				return ;
+			}
 			result = data[0];
-			console.log(result);
 			map.fitBounds(result.bbox);
 
 			$('#addrlat').val( result.center.lat );
