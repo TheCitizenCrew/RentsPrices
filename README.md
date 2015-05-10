@@ -15,7 +15,7 @@ L'idée est de permettre des études à partir de données déclarées (crowdsou
 
 - [x] Choose frameworks
 - [x] Rent input
-  - [x] form for Rent & Rent Prices [#1](https://github.com/TheCitizenCrew/RentsPrices/issues/1) [#2](https://github.com/TheCitizenCrew/RentsPrices/issues/2)
+  - [x] form for Rent & Rent Prices
   - [x] Map location of the rent's address
 - [ ] Display Rents
   - [x] on a map
