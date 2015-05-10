@@ -72,9 +72,20 @@
 			markers.clearLayers();
 			data.forEach( function(rent) {
 				//console.log(rent);
-				var title = rent.street+', '+rent.zipcode+', '+rent.city ;
-				var marker = L.marker( L.latLng(rent.addrlat, rent.addrlng), { title: title });
-				marker.bindPopup('<b>'+title+'</b>');
+				var marker = L.marker( L.latLng(rent.addrlat, rent.addrlng), { rent_id: rent.id });
+				if( rent.buildingIndividual )
+				{
+					marker.bindPopup( '<b>Logement individuel</b><br/>'
+						+ rent.street+', '+rent.zipcode+', '+rent.city+', '+rent.country
+					);
+				}
+				else
+				{
+					marker.bindPopup( '<b>Logement collectif</b><br/>'
+						+ rent.buildingStage+', '+rent.buildingName+'<br/>'
+						+ rent.street+', '+rent.zipcode+', '+rent.city+', '+rent.country
+					);
+				}
 				markers.addLayer(marker);
 			});
 			map.fire('dataload');
