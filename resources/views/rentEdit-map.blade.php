@@ -17,7 +17,7 @@
 <a id="locateAddress" tabindex="0" class="btn btn-default " role="button" onclick="geocodeAddress();" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" >
 localiser l'adresse</a>
 
-<a id="centerAddress" tabindex="0" class="btn btn-default " role="button" onclick="centerOnAddress();" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" data-title="Attention:" >
+<a id="centerAddress" tabindex="0" class="btn btn-default " role="button" onclick="centerOnAddress();" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" >
 Center sur l'adresse</a>
 
 <div id="map"></div>
@@ -86,13 +86,11 @@ Center sur l'adresse</a>
 		function geocodeAddress()
 		{
 			var addr = [];
-			for( var input in ['#street', '#zipcode', '#city', '#country'] )
-			{
+			['#street', '#zipcode', '#city', '#country'].forEach( function(input){
 				var v = $(input).val() ;
-				if( v == undefined || v.trim() == '' )
-					continue ;
-				addr.push( v );
-			}
+				if( v != undefined && v.trim() != '' )
+					addr.push( v );
+			} );
 			if( addr.length == 0 )
 			{
 				$('#locateAddress').popover('show');
