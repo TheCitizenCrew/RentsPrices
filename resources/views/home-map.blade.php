@@ -53,7 +53,7 @@
 			$("#alertBox").hide();
 			map.fire('dataloading');
 			var bounds = map.getBounds();
-			var url = 'http://prixdesloyers.localhost/api/findRentsInBBox'
+			var url = '/api/findRentsInBBox'
 				+ "/" + bounds.getSouthWest().lat // swLat
 				+ "/" + bounds.getSouthWest().lng // swLon=
 				+ "/" + bounds.getNorthEast().lat // neLat=
