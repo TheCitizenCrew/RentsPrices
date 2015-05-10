@@ -17,6 +17,7 @@
  * </form>
  */
 $app->get( '/', 'App\Http\Controllers\Controller@home' );
+$app->get( '/about', 'App\Http\Controllers\Controller@about' );
 
 $app->group( [ 'prefix' => 'rent' ], 
 	function ( $app )
@@ -26,26 +27,4 @@ $app->group( [ 'prefix' => 'rent' ],
 		$app->get( '{id:[0-9]+}/edit', 'App\Http\Controllers\RentController@edit' );
 		$app->post( '', 'App\Http\Controllers\RentController@save' );
 		$app->post( '{id:[0-9]+}', 'App\Http\Controllers\RentController@update' );
-	} );
-
-/**
- * REST API
- * http://en.wikipedia.org/wiki/Representational_state_transfer
- * http://rest.elkstein.org/
- */
-$app->group( [ 'prefix' => 'api' ], 
-	function ( $app )
-	{
-		/**
-		 * URIs for Rents
-		 */
-		$app->group( [ 'prefix' => 'rents' ], 
-			function ( $app )
-			{
-				$app->get( '', 'App\Http\Controllers\Api\RentsController@find' );
-				$app->post( '', 'App\Http\Controllers\Api\RentsController@create' );
-				$app->get( '{id:[0-9]+}', 'App\Http\Controllers\Api\RentsController@get' );
-				$app->put( '{id:[0-9]+}', 'App\Http\Controllers\Api\RentsController@save' );
-				$app->delete( '{id:[0-9]+}', 'App\Http\Controllers\Api\RentsController@delete' );
-			} );
 	} );
