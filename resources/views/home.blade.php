@@ -6,4 +6,7 @@
 @section('content')
 
 Welcome.
+
+	@include('home-map')
+
 @stop

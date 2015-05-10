@@ -33,4 +33,19 @@ class Rent extends Model
 	{
 		return $this->hasMany('\App\Models\RentPrice');
 	}
+
+	public function scopeBBox($query, $swLat=0, $swLng=0, $neLat=0, $neLng=0)
+	{
+		//$sql = 'SELECT * FROM ' . $table . ' WHERE geo_lat >= ' . floatval($swLat) . ' and geo_lon >= ' . floatval($swLon)
+		//. ' and geo_lat <= ' . floatval($neLat) . ' and geo_lon <= ' . floatval($neLon) . ' ';
+		
+		
+		return $query
+			->where('addrLat', '>=', floatval($swLat) )
+			->where('addrLng','>=', floatval($swLng) )
+			->where('addrLat','<=', floatval($neLat) )
+			->where('addrLng','<=', floatval($neLng) );
+
+	}
+
 }

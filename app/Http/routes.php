@@ -27,4 +27,16 @@ $app->group( [ 'prefix' => 'rent' ],
 		$app->get( '{id:[0-9]+}/edit', 'App\Http\Controllers\RentController@edit' );
 		$app->post( '', 'App\Http\Controllers\RentController@save' );
 		$app->post( '{id:[0-9]+}', 'App\Http\Controllers\RentController@update' );
+
 	} );
+
+$app->group( [ 'prefix' => 'api' ],
+	function ( $app )
+	{
+		// example: http://prixdesloyers.localhost/api/findRentsInBBox/36.03133177633187/-12.963867187499998/54.367758524068385/33.92578125
+		$app->get(
+			'findRentsInBBox/{swLat:[0-9\.\-]+}/{swLng:[0-9\.\-]+}/{neLat:[0-9\.\-]+}/{neLng:[0-9\.\-]+}',
+			'App\Http\Controllers\ApiController@findRentsInBBox' );
+
+	} );
+
