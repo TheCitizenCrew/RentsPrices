@@ -88,19 +88,21 @@
 
 			@include('rentEdit-map')
 
-			<div class="form-group col-md-3">
-				<label for="addrlat" class="control-label">Lattitude</label>
-				<input type="text" class="form-control" name="addrlat" id="addrlat" placeholder="latitude"  value="{{$rent->addrlat}}" />
-				@if ($errors->first('addrlat'))
-				<p class="text-danger">error {{$errors->first('addrlat')}} </p>
-				@endif				
-			</div>
-			<div class="form-group col-md-3">
-				<label for="addrlng" class="control-label">Longitude</label>
-				<input type="text" class="form-control" name="addrlng" id="addrlng" placeholder="longitude"  value="{{$rent->addrlng}}" />
-				@if ($errors->first('addrlng'))
-				<p class="text-danger">error {{$errors->first('addrlng')}} </p>
-				@endif				
+			<div class="row">
+				<div class="form-group col-md-3">
+					<label for="addrlat" class="control-label">Lattitude</label>
+					<input type="text" class="form-control" name="addrlat" id="addrlat" placeholder="latitude"  value="{{$rent->addrlat}}" />
+					@if ($errors->first('addrlat'))
+					<p class="text-danger">error {{$errors->first('addrlat')}} </p>
+					@endif
+				</div>
+				<div class="form-group col-md-3">
+					<label for="addrlng" class="control-label">Longitude</label>
+					<input type="text" class="form-control" name="addrlng" id="addrlng" placeholder="longitude"  value="{{$rent->addrlng}}" />
+					@if ($errors->first('addrlng'))
+					<p class="text-danger">error {{$errors->first('addrlng')}} </p>
+					@endif
+				</div>
 			</div>
 
 			<h2>Loyers</h2>
@@ -110,11 +112,11 @@
 			<div id="rents">
 				<?php $rowsCount = 0 ; ?>
 				@foreach($rent->prices as $price)
-				<div class="row" id="rentRow{{$rowsCount}}">
+				<div  id="rentRow{{$rowsCount}}">
 					<input type="hidden" name="rentprice[{{$rowsCount}}][id]" value="{{$price->id}}" />
-					<fieldset>
-						<div class="form-group">
-							<div class="col-xs-4">
+					<fieldset class="row">
+						
+							<div class="form-group col-md-2">
 								<label >Année</label>
 								<input type="text" class="form-control" placeholder="L'année"
 									name="rentprice[{{$rowsCount}}][year]" value="{{$price->year}}" />
@@ -122,7 +124,8 @@
 									<p class="text-danger">error {{$errors->first('year'.$rowsCount)}} </p>
 								@endif				
 							</div>
-							<div class="col-xs-4">
+
+							<div class="form-group col-md-2">
 								<label >Prix mensuel</label>
 								<input type="text" class="form-control" placeholder="Le prix mensuel"
 									name="rentprice[{{$rowsCount}}][price]" value="{{$price->price}}" />
@@ -130,10 +133,12 @@
 									<p class="text-danger">error {{$errors->first('price'.$rowsCount)}} </p>
 								@endif				
 							</div>
-							<button type="button" class="btn btn-default rentpriceTrash" data-rowcount="{{$rowsCount}}" aria-label="Left Align">
-								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-							</button>
-						</div>
+							<div class="form-group col-md-1">
+								<button type="button" class="btn btn-default rentpriceTrash" data-rowcount="{{$rowsCount}}" aria-label="Left Align">
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								</button>
+							</div>
+							
 					</fieldset>
 				</div>
 				<?php $rowsCount ++ ; ?>
