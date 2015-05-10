@@ -12,7 +12,16 @@ use App\Models\RentPrice;
  */
 class ApiController extends Controller
 {
-	public function findRentsInBBox( $swLat, $swLng, $neLat, $neLng)
+	public function rentsCount()
+	{
+		$stats = array(
+			'rentsCount' => Rent::all()->count(),
+			'rentPricesCount' => RentPrice::all()->count(),
+		);
+		return response()->json( $stats );
+	}
+
+	public function rentsFindInBBox( $swLat, $swLng, $neLat, $neLng)
 	{
 		$rents = Rent::bBox($swLat, $swLng, $neLat, $neLng)->get() ;
 		return response()->json($rents);

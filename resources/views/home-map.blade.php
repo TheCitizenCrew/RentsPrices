@@ -53,7 +53,7 @@
 			$("#alertBox").hide();
 			map.fire('dataloading');
 			var bounds = map.getBounds();
-			var url = '/api/findRentsInBBox'
+			var url = '/api/rentsFindInBBox'
 				+ "/" + bounds.getSouthWest().lat // swLat
 				+ "/" + bounds.getSouthWest().lng // swLon=
 				+ "/" + bounds.getNorthEast().lat // neLat=
@@ -68,7 +68,7 @@
 
 	function loadData( url )
 	{
-		var jqxhr = $.getJSON( url, function( data ) {
+		$.getJSON( url, function( data ) {
 			markers.clearLayers();
 			data.forEach( function(rent) {
 				//console.log(rent);
