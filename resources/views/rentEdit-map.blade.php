@@ -14,7 +14,7 @@
 @stop
 
 
-<a id="locateAddress" tabindex="0" class="btn btn-default " role="button" onclick="geocodeAddress();" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" >
+<a id="locateAddress" tabindex="0" class="btn btn-default " role="button" onclick="geocodeAddress(true);" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" >
 localiser l'adresse</a>
 
 <a id="centerAddress" tabindex="0" class="btn btn-default " role="button" onclick="centerOnAddress();" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" >
@@ -50,7 +50,6 @@ Center sur l'adresse</a>
 			}).addTo(map);
 
 			// Catch lost focus on some form's inputs
-
 			$( "#street, #zipcode, #city, #country" ).focusout(function()
 			{
 				if( $('#street').val() !='' && $('#zipcode').val() != '' && $('#city').val() != '' )
@@ -70,6 +69,9 @@ Center sur l'adresse</a>
 
 		});
 
+		/**
+		 * Center the map on address
+		 */
 		function centerOnAddress()
 		{
 			if( geocodeMarker )
@@ -81,10 +83,23 @@ Center sur l'adresse</a>
 		}
 
 		/**
-		 * Construct the address string and call the geocoder
+		 * Construct the address string and call the geocoder.
 		 */
-		function geocodeAddress()
+		function geocodeAddress(force)
 		{
+
+			// if geolocManual is on and force is off, do nothing
+
+			if( force == undefined || force == false )
+			{
+				if( geolocManual() )
+				{
+					return ;
+				}
+			}
+
+			// Construct the address query string
+
 			var addr = [];
 			['#street', '#zipcode', '#city', '#country'].forEach( function(input){
 				var v = $(input).val() ;
@@ -96,11 +111,17 @@ Center sur l'adresse</a>
 				$('#locateAddress').popover('show');
 				return ;
 			}
+
+			// Call the geocoder
+
 			map.fire('dataloading');
-			geocoder.geocode( addr.join(','), geocodeResult, null );			
+			geocoder.geocode( addr.join(','), geocoderOnResult, null );			
 		}
 
-		function geocodeResult(data)
+		/**
+		 * Handle geocoder result (callback)
+		 */
+		function geocoderOnResult(data)
 		{
 			map.fire('dataload');
 
@@ -117,6 +138,7 @@ Center sur l'adresse</a>
 			if( geocodeMarker )
 			{
 				geocodeMarker.setLatLng(result.center);
+				geolocManual(false);
 			}
 			else
 			{
@@ -130,13 +152,48 @@ Center sur l'adresse</a>
 			geocodeMarker = new L.Marker( [lat, lng], {
 				draggable: true
 				})
-			.on('dragend', function(){
-				map.setView( geocodeMarker.getLatLng(), 18);
-				$('#addrlat').val( geocodeMarker.getLatLng().lat );
-				$('#addrlng').val( geocodeMarker.getLatLng().lng );
-			})
+			.on('dragend', geocodeMarkerOnDragEnd)
 			.addTo(map);
+			geolocManual( geolocManual() );
+		}
 
+		function geocodeMarkerOnDragEnd(e)
+		{
+			map.setView( geocodeMarker.getLatLng(), 18);
+			$('#addrlat').val( geocodeMarker.getLatLng().lat );
+			$('#addrlng').val( geocodeMarker.getLatLng().lng );
+			geolocManual(true);
+		}
+
+		iconGeolocAuto = new L.Icon({
+			iconUrl: '/img/marker-leaf-green2.png',
+			iconSize: new L.Point(64, 64),
+			shadowUrl: '/img/marker-leaf-shadow.png',
+			shadowSize: [50, 44],
+		  shadowAnchor: [22, 12]
+		});
+		iconGeolocManual = new L.Icon({
+			iconUrl: '/img/marker-leaf-yellow2.png',
+			iconSize: new L.Point(64, 64),
+			shadowUrl: '/img/marker-leaf-shadow.png',
+			shadowSize: [50, 44],
+			shadowAnchor: [22, 12]
+		});
+
+		function geolocManual(state)
+		{
+			if( ! geocodeMarker )
+				return ;
+			if( state == undefined ) {
+				return $('#geolocManual').val() != 0 ? true : false ;
+			}
+			if( state == true ) {
+				$('#geolocManual').val('1');
+				geocodeMarker.setIcon(iconGeolocManual);
+			} else {
+				$('#geolocManual').val('0');
+				geocodeMarker.setIcon(iconGeolocAuto);
+			}
 		}
 
 	</script>

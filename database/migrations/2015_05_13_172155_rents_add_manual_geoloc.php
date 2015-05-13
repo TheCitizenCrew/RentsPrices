@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddGeolocToRentsTable extends Migration {
+class RentsAddManualGeoloc extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -14,9 +14,7 @@ class AddGeolocToRentsTable extends Migration {
 	{
 		Schema::table('rents', function(Blueprint $table)
 		{
-			$table->double('addrlat')->nullable();
-			$table->double('addrlng')->nullable();
-			$table->string('country')->nullable();
+			$table->boolean('geoloc_manual')->default(false);
 
 		});
 	}
@@ -30,9 +28,7 @@ class AddGeolocToRentsTable extends Migration {
 	{
 		Schema::table('rents', function(Blueprint $table)
 		{
-			$table->removeColumn('addrlat');
-			$table->removeColumn('addrlng');
-			$table->removeColumn('country');
+			$table->removeColumn('geoloc_manual');
 		});
 	}
 

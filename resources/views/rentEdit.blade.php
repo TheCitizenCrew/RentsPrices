@@ -19,6 +19,7 @@
 		<form class="form-horizontal" method="POST" action="/rent/{{$rent->id}}">
 		@endif
 			<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+			<input type="hidden" name="geolocManual" id="geolocManual" value="{{$rent->geolocManual}}" />
 
 			<h2>Adresse</h2>
 
