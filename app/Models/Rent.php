@@ -33,7 +33,7 @@ class Rent extends Model
 	];
 
 	/**
-	 * Get Rent's RentPrices
+	 * Get Rent's RentPrice
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 */
 	public function prices()
@@ -41,18 +41,23 @@ class Rent extends Model
 		return $this->hasMany('\App\Models\RentPrice');
 	}
 
-	public function scopeBBox($query, $swLat=0, $swLng=0, $neLat=0, $neLng=0)
+	/**
+	 * A scope to geo selection with a bbox.
+	 * 
+	 * @param Illuminate\Database\Eloquent\Builder $query
+	 * @param double $swLat
+	 * @param double $swLng
+	 * @param double $neLat
+	 * @param double $neLng
+	 * @return Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeBBox($query, $swLat=0.0, $swLng=0.0, $neLat=0.0, $neLng=0.0)
 	{
-		//$sql = 'SELECT * FROM ' . $table . ' WHERE geo_lat >= ' . floatval($swLat) . ' and geo_lon >= ' . floatval($swLon)
-		//. ' and geo_lat <= ' . floatval($neLat) . ' and geo_lon <= ' . floatval($neLon) . ' ';
-		
-		
 		return $query
 			->where('addrLat', '>=', floatval($swLat) )
 			->where('addrLng','>=', floatval($swLng) )
 			->where('addrLat','<=', floatval($neLat) )
 			->where('addrLng','<=', floatval($neLng) );
-
 	}
 
 }
