@@ -14,7 +14,7 @@ class RentsAddManualGeoloc extends Migration {
 	{
 		Schema::table('rents', function(Blueprint $table)
 		{
-			$table->boolean('geoloc_manual')->default(false);
+			$table->boolean('geolocManual')->default(false);
 
 		});
 	}
@@ -28,7 +28,7 @@ class RentsAddManualGeoloc extends Migration {
 	{
 		Schema::table('rents', function(Blueprint $table)
 		{
-			$table->removeColumn('geoloc_manual');
+			$table->removeColumn('geolocManual');
 		});
 	}
 

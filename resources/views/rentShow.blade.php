@@ -55,13 +55,15 @@
 @section('javascript')
 	@parent
 	<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+	<script src="/js/RentsMap.common.js"></script>
 
 	<script>
 
 		var map, geocodeMarker,
 			lat = {{$rent->addrlat}},
-			lng = {{$rent->addrlng}};
-		var zoom = 15 ;
+			lng = {{$rent->addrlng}},
+			gelocManual = {{$rent->geolocManual}},
+			zoom = 15 ;
 
 		$(function() {
 
@@ -92,6 +94,10 @@
 		{
 			geocodeMarker = new L.Marker( [lat, lng] )
 			.addTo(map);
+			if( gelocManual != 0 )
+				geocodeMarker.setIcon(iconGeolocManual);
+			else
+				geocodeMarker.setIcon(iconGeolocAuto);
 		}
 
 	</script>

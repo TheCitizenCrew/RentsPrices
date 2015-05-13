@@ -26,8 +26,9 @@ Center sur l'adresse</a>
 	@parent
 	<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 	<script src="//cdn.rawgit.com/ebrelsford/Leaflet.loading/v0.1.16/src/Control.Loading.js"></script>
-	<script src="/Geocoder.AddOk.js"></script>
-
+	<script src="/js/Geocoder.AddOk.js"></script>
+	<script src="/js/RentsMap.common.js"></script>
+	
 	<script>
 
 		var map, geocodeMarker,
@@ -164,21 +165,6 @@ Center sur l'adresse</a>
 			$('#addrlng').val( geocodeMarker.getLatLng().lng );
 			geolocManual(true);
 		}
-
-		iconGeolocAuto = new L.Icon({
-			iconUrl: '/img/marker-leaf-green2.png',
-			iconSize: new L.Point(64, 64),
-			shadowUrl: '/img/marker-leaf-shadow.png',
-			shadowSize: [50, 44],
-		  shadowAnchor: [22, 12]
-		});
-		iconGeolocManual = new L.Icon({
-			iconUrl: '/img/marker-leaf-yellow2.png',
-			iconSize: new L.Point(64, 64),
-			shadowUrl: '/img/marker-leaf-shadow.png',
-			shadowSize: [50, 44],
-			shadowAnchor: [22, 12]
-		});
 
 		function geolocManual(state)
 		{
