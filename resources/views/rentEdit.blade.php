@@ -151,7 +151,7 @@
 			</div>
 		
 			<br/>
-			<a href="/rent/{{$rent->id}}" class="btn btn-warning">Annuler</a>
+			<a href="#" onclick="javascript: window.history.back();" class="btn btn-warning">Annuler</a>
 			<button type="submit" class="btn btn-success">Enregistrer</button>
 			
 		</form>
