@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Rent extends Model
 {
 	// https://github.com/thoughtsatire/revisionable
 	use \Venturecraft\Revisionable\RevisionableTrait;
-	
+
+	// http://laravel.com/docs/5.0/eloquent#soft-deleting
+	use SoftDeletes;
+
 	use DatePresenter ;
 	/**
 	 * The fillable property specifies which attributes should be mass-assignable.
