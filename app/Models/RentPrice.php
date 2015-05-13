@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
   
 class RentPrice extends Model
 {
+	// https://github.com/thoughtsatire/revisionable
+	use \Venturecraft\Revisionable\RevisionableTrait;
+
 	protected $fillable = ['year', 'price'];
 	
 	public static $rules = [

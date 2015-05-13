@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rent extends Model
 {
+	// https://github.com/thoughtsatire/revisionable
+	use \Venturecraft\Revisionable\RevisionableTrait;
+	
 	use DatePresenter ;
 	/**
 	 * The fillable property specifies which attributes should be mass-assignable.
