@@ -10,6 +10,10 @@
 
 <h2>Mentions Légales</h2>
 
+<h3>Contribution au service</h3>
+
+<p>En contribuant à ce service de récolte et de partage des prix des loyers, vous accepter toutes les conditions exprimées ci-suit.</p>
+
 <h3>Droits d'utilisation et de distribution</h3>
 
 <p>Les contenus, les données et le programme constituant ce service de récolte des prix des loyers sont partagés et protégés selon ces termes :</p>
