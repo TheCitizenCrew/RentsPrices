@@ -28,6 +28,8 @@
 	<script src="//cdn.rawgit.com/ebrelsford/Leaflet.loading/v0.1.16/src/Control.Loading.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
 	<script>
+	"use strict" ;
+
 	var map, markers ;
 
 	$(function() {

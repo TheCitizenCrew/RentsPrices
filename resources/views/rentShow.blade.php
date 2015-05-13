@@ -58,6 +58,7 @@
 	<script src="/js/RentsMap.common.js"></script>
 
 	<script>
+		"use strict" ;
 
 		var map, geocodeMarker,
 			lat = {{$rent->addrlat}},

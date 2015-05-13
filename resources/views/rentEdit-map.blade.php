@@ -30,9 +30,10 @@ Center sur l'adresse</a>
 	<script src="/js/RentsMap.common.js"></script>
 	
 	<script>
+		"use strict" ;
 
 		var map, geocodeMarker,
-			geocoder = new GeocoderAddOk( {limit: 10 } )
+			geocoder = new GeocoderAddOk( {limit: 10 } ),
 			zoom = 17 ;
 
 		$(function() {

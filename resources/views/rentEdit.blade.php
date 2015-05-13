@@ -164,6 +164,8 @@
 	@parent
 
 	<script>
+		"use strict" ;
+
 		$(function() {
 
 			// add a rent button

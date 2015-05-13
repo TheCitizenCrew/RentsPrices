@@ -14,12 +14,13 @@
 @section('javascript')
 	@parent
 	<script>
+	"use strict" ;
+
 	$(function() {
 		$.getJSON( '/api/rentsCount', function( data ) {
-			console.log(data);
 			$('#rentsCount').text( data.rentsCount );
 			$('#rentPricesCount').text( data.rentPricesCount );
-});
+		});
 	});
 	</script>
 @stop
