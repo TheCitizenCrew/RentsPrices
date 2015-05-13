@@ -84,7 +84,8 @@
 			</div>
 
 			<p>La position géographique de l'adresse du logement a été calculée automatiquement.
-			Vous pouvez la corriger en déplacement le marqueur bleu.</p>
+			Vous pouvez la corriger en déplacement le marqueur bleu.<br/>
+			<small>Le géocodage automatique ne fonctionne que pour la France métropolitaine, pour l'instant (cf. <a href="https://github.com/TheCitizenCrew/RentsPrices/issues/10">issue #10</a>)</small>.</p>
 
 			@include('rentEdit-map')
 
