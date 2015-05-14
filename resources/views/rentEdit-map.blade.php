@@ -14,11 +14,11 @@
 @stop
 
 
-<a id="locateAddress" tabindex="0" class="btn btn-default " role="button" onclick="geocodeAddress(true);" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" >
+<a id="locateAddress" tabindex="0" class="btn btn-default " role="button" onclick="geocodeAddress(true);" data-toggle="popover" data-trigger="manual" data-content="L'adresse n'est pas complète" >
 localiser l'adresse</a>
 
-<a id="centerAddress" tabindex="0" class="btn btn-default " role="button" disabled="disabled" onclick="centerOnAddress();" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" >
-Center sur l'adresse</a>
+<a id="centerOnMarker" tabindex="0" class="btn btn-default " role="button" onclick="centerOnMarker();" >
+Center sur le marqueur</a>
 
 <div id="map"></div>
 
@@ -53,14 +53,18 @@ Center sur l'adresse</a>
 			}).addTo(map);
 
 			// Catch lost focus on some form's inputs
-			$( "#street, #zipcode, #city, #country" ).focusout(function()
-			{
+			$( "#street, #zipcode, #city, #country" ).focusout(function() {
 				if( $('#street').val() !='' && $('#zipcode').val() != '' && $('#city').val() != '' )
 				{
 					geocodeAddress();
 				}
 			});
 
+			// bottstrap popover trigger manual, so need code to hide it
+			$( "#locateAddress" ).focusout(function() {
+				$('#locateAddress').popover('hide');
+			});
+			
 			// Place the geomarker and some other map stuff
 			createGeoMarker( $('#addrlat').val(), $('#addrlng').val() );
 
@@ -69,14 +73,9 @@ Center sur l'adresse</a>
 		/**
 		 * Center the map on address
 		 */
-		function centerOnAddress()
+		function centerOnMarker()
 		{
-			if( geocodeMarker )
-			{
-				map.setView( geocodeMarker.getLatLng(), zoom);
-				reutrn ;
-			}
-			$('#centerAddress').popover('show');
+			map.setView( geocodeMarker.getLatLng(), zoom);
 		}
 
 		/**
@@ -103,9 +102,13 @@ Center sur l'adresse</a>
 				if( v != undefined && v.trim() != '' )
 					addr.push( v );
 			} );
-			if( addr.length == 0 )
+			console.log('addr.length: '+addr.length);
+			if( addr.length < 4 )
 			{
 				$('#locateAddress').popover('show');
+			}
+			if( addr.length == 0 )
+			{
 				return ;
 			}
 
@@ -146,9 +149,6 @@ Center sur l'adresse</a>
 				geocodeMarker.setIcon(iconGeolocNotFound);
 			}
 
-			// We've got a positionned geoMarker so we have something to center on: active the button
-			$('#centerAddress').attr('disabled', '');
-
 		}
 
 		function createGeoMarker( lat, lng )
@@ -179,8 +179,6 @@ Center sur l'adresse</a>
 			{
 				geolocManual( geolocManual() );
 				map.setView( geocodeMarker.getLatLng(), zoom);
-				// We've got a positionned geoMarker so we have something to center on: active the button
-				$('#centerAddress').attr('disabled', '');
 			}
 
 		}
