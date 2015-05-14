@@ -141,20 +141,20 @@
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 								</button>
 							</div>
-							
+
 					</fieldset>
 				</div>
 				<?php $rowsCount ++ ; ?>
 				@endforeach
-		
+
 				<button type="button" id="addRent" class="btn btn-default">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter une année</button>
 			</div>
-		
+
 			<br/>
-			<a href="#" onclick="cancel(this)" class="btn btn-warning">Annuler</a>
+			<a href="@if($rent->id > 0) {{ app('url')->route('RentShow',array('id'=>$rent->id)) }} @else {{ app('url')->route('Home') }} @endif" class="btn btn-warning">Annuler</a>
 			<button type="submit" class="btn btn-success">Enregistrer</button>
-			
+
 		</form>
 
 	</div>
@@ -194,18 +194,6 @@
 			});
 
 		});
-
-		function cancel(e)
-		{
-			var id = $('#id').val();
-			console.log(id);
-			if( id=='' ){
-				e.href='/';
-			}	else {
-				e.href='/rent/'+id;
-			}
-			return true ;
-		}
 
 	</script>
 

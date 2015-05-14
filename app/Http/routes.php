@@ -15,18 +15,22 @@
  * <input type="hidden" name="_method" value="PUT">
  * <input type="hidden" name="_token" value="{{ csrf_token() }}">
  * </form>
+ * 
+ * $app->get('user/profile', [
+    'as' => 'profile', 'uses' => 'App\Http\Controllers\UserController@showProfile'
+]);
  */
-$app->get( '/', 'App\Http\Controllers\Controller@home' );
-$app->get( '/about', 'App\Http\Controllers\Controller@about' );
+$app->get( '/', ['as'=>'Home', 'uses'=>'App\Http\Controllers\Controller@home'] );
+$app->get( '/about', ['as'=>'About', 'uses'=>'App\Http\Controllers\Controller@about'] );
 
 $app->group( [ 'prefix' => 'rent' ], 
-	function ( $app )
+	function ( Laravel\Lumen\Application $app )
 	{
-		$app->get( '', 'App\Http\Controllers\RentController@editNew' );
-		$app->get( '{id:[0-9]+}', 'App\Http\Controllers\RentController@show' );
-		$app->get( '{id:[0-9]+}/edit', 'App\Http\Controllers\RentController@edit' );
-		$app->post( '', 'App\Http\Controllers\RentController@save' );
-		$app->post( '{id:[0-9]+}', 'App\Http\Controllers\RentController@update' );
+		$app->get( '', ['as'=>'RentNew', 'uses' => 'App\Http\Controllers\RentController@editNew'] );
+		$app->get( '{id:[0-9]+}', ['as'=>'RentShow', 'uses' =>'App\Http\Controllers\RentController@show'] );
+		$app->get( '{id:[0-9]+}/edit', ['as'=>'RentEdit', 'uses'=>'App\Http\Controllers\RentController@edit'] );
+		$app->post( '', ['as'=>'RentSave', 'uses'=>'App\Http\Controllers\RentController@save'] );
+		$app->post( '{id:[0-9]+}', ['as'=>'RentUpdate','uses'=>'App\Http\Controllers\RentController@update'] );
 
 	} );
 
