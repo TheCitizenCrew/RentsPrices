@@ -17,7 +17,7 @@
 <a id="locateAddress" tabindex="0" class="btn btn-default " role="button" onclick="geocodeAddress(true);" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" >
 localiser l'adresse</a>
 
-<a id="centerAddress" tabindex="0" class="btn btn-default " role="button" onclick="centerOnAddress();" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" >
+<a id="centerAddress" tabindex="0" class="btn btn-default " role="button" disabled="disabled" onclick="centerOnAddress();" data-toggle="popover" data-trigger="focus" data-content="L'adresse n'est pas complète" >
 Center sur l'adresse</a>
 
 <div id="map"></div>
@@ -34,6 +34,7 @@ Center sur l'adresse</a>
 
 		var map, geocodeMarker,
 			geocoder = new GeocoderAddOk( {limit: 10 } ),
+			defaultMapView = [45.936, 10.481],
 			zoom = 17 ;
 
 		$(function() {
@@ -42,7 +43,7 @@ Center sur l'adresse</a>
 
 			map = L.map('map', {
 				 loadingControl: true
-			}).setView([45.936, 10.481], 5);
+			}).setView(defaultMapView, 5);
 			// remove map's pane to avoid map moves while scrolling the page
 			map.scrollWheelZoom.disable();
 			map.touchZoom.disable();
@@ -60,14 +61,8 @@ Center sur l'adresse</a>
 				}
 			});
 
-			// Place the map on previously recorded location
-			var lat = $('#addrlat').val(),
-				lng = $('#addrlng').val();
-			if( lat!=0 && lng!=0 )
-			{
-				createGeoMarker( lat, lng );
-				map.setView( geocodeMarker.getLatLng(), zoom);
-			}
+			// Place the geomarker and some other map stuff
+			createGeoMarker( $('#addrlat').val(), $('#addrlng').val() );
 
 		});
 
@@ -129,34 +124,65 @@ Center sur l'adresse</a>
 
 			if( data[0] == undefined )
 			{
+				// No result
+				geocodeMarker.setIcon(iconGeolocNotFound);
 				return ;
 			}
+			console.log('score: '+data[0].score);
 
+			// pan the map and geomarker
 			map.fitBounds(data[0].bbox);
+			geocodeMarker.setLatLng(data[0].center);
 
+			// update data
 			$('#addrlat').val( data[0].center.lat );
 			$('#addrlng').val( data[0].center.lng );
 
-			if( geocodeMarker )
+			geolocManual(false);
+
+			if( data[0].score < 0.5 )
 			{
-				geocodeMarker.setLatLng(data[0].center);
-				geolocManual(false);
+				// Poor result
+				geocodeMarker.setIcon(iconGeolocNotFound);
 			}
-			else
-			{
-				createGeoMarker( data[0].center.lat, data[0].center.lng );
-			}
-		
+
+			// We've got a positionned geoMarker so we have something to center on: active the button
+			$('#centerAddress').attr('disabled', '');
+
 		}
 
 		function createGeoMarker( lat, lng )
 		{
+			var unknowPosition = false ;
+			if( lat=='' && lng=='' )
+			{
+				unknowPosition = true ;
+			}
+
+			if( unknowPosition )
+			{
+				lat = map.getCenter().lat;
+				lng = map.getCenter().lng;
+			}
+
 			geocodeMarker = new L.Marker( [lat, lng], {
 				draggable: true
 				})
 			.on('dragend', geocodeMarkerOnDragEnd)
 			.addTo(map);
-			geolocManual( geolocManual() );
+
+			if( unknowPosition )
+			{
+				geocodeMarker.setIcon(iconGeolocNotFound);
+			}
+			else
+			{
+				geolocManual( geolocManual() );
+				map.setView( geocodeMarker.getLatLng(), zoom);
+				// We've got a positionned geoMarker so we have something to center on: active the button
+				$('#centerAddress').attr('disabled', '');
+			}
+
 		}
 
 		function geocodeMarkerOnDragEnd(e)
