@@ -131,20 +131,20 @@ Center sur l'adresse</a>
 			{
 				return ;
 			}
-			result = data[0];
-			map.fitBounds(result.bbox);
 
-			$('#addrlat').val( result.center.lat );
-			$('#addrlng').val( result.center.lng );
+			map.fitBounds(data[0].bbox);
+
+			$('#addrlat').val( data[0].center.lat );
+			$('#addrlng').val( data[0].center.lng );
 
 			if( geocodeMarker )
 			{
-				geocodeMarker.setLatLng(result.center);
+				geocodeMarker.setLatLng(data[0].center);
 				geolocManual(false);
 			}
 			else
 			{
-				createGeoMarker( result.center.lat, result.center.lng );
+				createGeoMarker( data[0].center.lat, data[0].center.lng );
 			}
 		
 		}
