@@ -134,6 +134,11 @@ class RentController extends BaseController
 	{
 		$rentPricesToDelete = array();
 
+		if( $request->get( 'rentprice' ) == null )
+		{
+			return $rentPricesToDelete ;
+		}
+
 		$rpIdx = 0 ;
 		foreach( $request->get( 'rentprice' ) as $rp )
 		{
