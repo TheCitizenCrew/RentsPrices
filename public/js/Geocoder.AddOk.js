@@ -42,6 +42,7 @@ GeocoderAddOk.prototype = {
 
 					results.push({
 						name: f.properties.name,
+						score: f.properties.score,
 						center: latLng,
 						bbox: bbox
 					});
