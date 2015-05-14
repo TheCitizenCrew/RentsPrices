@@ -142,8 +142,19 @@ class RentController extends BaseController
 		$rpIdx = 0 ;
 		foreach( $request->get( 'rentprice' ) as $rp )
 		{
+
+			$allFieldsEmpty = true ;
+			foreach( $rp as $k=>$v )
+			{
+				if( $k != 'id' && $v != '' )
+				{
+					$allFieldsEmpty = false ;
+					break ;
+				}
+			}
+
 			// If data empty, delete the item
-			if( $rp['year']=='' && $rp['price']=='')
+			if( $allFieldsEmpty )
 			{
 				if( $rp['id'] > 0 )
 				{
@@ -209,16 +220,13 @@ class RentController extends BaseController
 	 */
 	protected function rentPriceFormatErrorMessage( array $errors, $rpIdx )
 	{
-		if( isset($errors['year']) )
+
+		foreach( $errors as $k => $v )
 		{
-			$errors['year'.$rpIdx] = $errors['year'] ;
-			unset($errors['year']);
+			$errors[$k.$rpIdx] = $errors[$k] ;
+			unset($errors[$k]);
 		}
-		if( isset($errors['price']) )
-		{
-			$errors['price'.$rpIdx] = $errors['price'] ;
-			unset($errors['price']);
-		}
+
 		return $errors ;
 	}
 
