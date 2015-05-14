@@ -19,6 +19,7 @@
 		<form class="form-horizontal" method="POST" action="/rent/{{$rent->id}}">
 		@endif
 			<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+			<input type="hidden" name="id" id="id" value="{{$rent->id}}" />
 			<input type="hidden" name="geolocManual" id="geolocManual" value="{{$rent->geolocManual}}" />
 
 			<h2>Adresse</h2>
@@ -151,7 +152,7 @@
 			</div>
 		
 			<br/>
-			<a href="#" onclick="javascript: window.history.back();" class="btn btn-warning">Annuler</a>
+			<a href="#" onclick="cancel(this)" class="btn btn-warning">Annuler</a>
 			<button type="submit" class="btn btn-success">Enregistrer</button>
 			
 		</form>
@@ -193,6 +194,19 @@
 			});
 
 		});
+
+		function cancel(e)
+		{
+			var id = $('#id').val();
+			console.log(id);
+			if( id=='' ){
+				e.href='/';
+			}	else {
+				e.href='/rent/'+id;
+			}
+			return true ;
+		}
+
 	</script>
 
 @stop
