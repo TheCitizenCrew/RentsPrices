@@ -114,7 +114,7 @@
 			<div id="rents">
 				<?php $rowsCount = 0 ; ?>
 				@foreach($rent->prices as $price)
-				<div  id="rentRow{{$rowsCount}}">
+				<div id="rentRow{{$rowsCount}}">
 					<input type="hidden" name="rentprice[{{$rowsCount}}][id]" value="{{$price->id}}" />
 					<fieldset class="row">
 						
@@ -171,15 +171,16 @@
 			// add a rent button
 			$('#addRent').on('click', function()
 			{
-				var n = $('#rents > div.row').size();
+				var n = $('#rents > div').size();
 				// Clone the initial Rent's row div "#rentRow"
 				var row = $('#rentRow0').clone();
+				row.attr('id', 'rentRow' + n );
 				// Rename the input field "rentprice[0][xxx]"
 				row.html( row.html().replace(/(rentprice\[)[0-9]+(\])/gm, '$1'+n+'$2') );
 				// emptying all inputs fields value
 				$('input', row).val(null);
 				// Insert the copy into the DOM
-				$(this).before( row.attr('id', 'rentRow' + n ) );
+				$(this).before( row );
 			});
 
 			// Remove a RentPrice
