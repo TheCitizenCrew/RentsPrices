@@ -4,16 +4,20 @@ namespace Controllers ;
 
 class RentControllerTest extends \TestCase
 {
+
 	public function testSimple()
 	{
+		echo __METHOD__, "\n";
+
 		$response = $this->call('GET', '/');
 		//error_log( gettype($response));
 		//error_log( get_class($response));
-
 	}
 
-	public function ZZZtestSave()
+	public function zTestCreate()
 	{
+		echo __METHOD__, "\n";
+
 		$input = array(
 			'buildingIndividual'=>1,
 			'buildingStage'=> '2',
@@ -35,13 +39,14 @@ class RentControllerTest extends \TestCase
 		*/
 
 		$response = $this->call('POST', '/rent', $input );
-		
-		error_log( var_export($response,true));
+
+		error_log( var_export($response,true) );
 		//$view = $response->getOriginalContent();
 		$view = $response->original;
 		//$view = $response->getContent();
-		
+
 		$this->assertEquals('Tours', $view['city']);
 
 	}
+
 }

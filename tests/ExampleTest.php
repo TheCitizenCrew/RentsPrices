@@ -11,7 +11,7 @@ class ExampleTest extends TestCase
 	public function testBasicExample()
 	{
 		echo __METHOD__, "\n";
-		
+
 		$response = $this->call( 'GET', '/' );
 		$this->assertResponseOk();
 	}
