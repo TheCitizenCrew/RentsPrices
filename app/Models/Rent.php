@@ -44,7 +44,10 @@ class Rent extends Model
 		'city'=>'required',
 		'country'=>'required',
 		'addrlat'=>'required|numeric',
-		'addrlng'=>'required|numeric'
+		'addrlng'=>'required|numeric',
+		'roomsCount'=>'numeric',
+		'kitchenRoom'=>'boolean',
+		'surfaceM2'=>'numeric',
 	];
 
 	/**
