@@ -218,16 +218,6 @@
 									@endif
 								</div>
 
-								<div class="col-sm-1">
-									<button type="button" class="btn btn-default rentpriceTrash" data-rowcount="{{$rowsCount}}" aria-label="Left Align">
-										<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-									</button>
-								</div>
-
-							</div>
-
-							<div class="form-group row">
-							
 								<div class="col-sm-2">
 									<label>Charges</label>
 									<input type="text" class="form-control" placeholder="Les charges"
@@ -236,6 +226,11 @@
 										<p class="text-danger">error {{$errors->first('loads'.$rowsCount)}} </p>
 									@endif
 								</div>
+
+							</div>
+
+							<div class="form-group row">
+							
 								<div class="col-sm-2">
 									<label>Autres Charges</label>
 									<input type="text" class="form-control" placeholder="Autres charges"
@@ -251,6 +246,12 @@
 									@if( $errors->first('loadsOtherText'.$rowsCount) )
 										<p class="text-danger">error {{$errors->first('loadsOtherText'.$rowsCount)}} </p>
 									@endif
+								</div>
+
+								<div class="col-sm-1">
+									<button type="button" class="btn btn-default rentpriceTrash" data-rowcount="{{$rowsCount}}" aria-label="Left Align">
+										<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+									</button>
 								</div>
 
 							</div>
