@@ -19,7 +19,7 @@ class Rent extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'id',	// FIXME : should not be there
+		//'id',	// FIXME : should not be there
 		'buildingIndividual',
 		'buildingStage',
 		'buildingHLM',
