@@ -23,17 +23,24 @@
 <div class="row">
 	<div class="col-md-6">
 		<table class="table">
-		<tr><td>Logement</td><td>@if($rent->buildingIndividual==1) collectif @else	individuel @endif</td></tr>
-		<tr><td>Étage</td><td>{{$rent->buildingStage}}</td></tr>
-		<tr><td>Nom</td><td>{{$rent->buildingName}}</td></tr>
-		<tr><td>Rue</td><td>{{$rent->street}}</td></tr>
-		<tr><td>Code postal</td><td>{{$rent->zipcode}}</td></tr>
-		<tr><td>Ville</td><td>{{$rent->city}}</td></tr>
-		<tr><td>Pays</td><td>{{$rent->country}}</td></tr>
-		<tr><td>Latitude</td><td>{{$rent->addrlat}}</td></tr>
-		<tr><td>Longitude</td><td>{{$rent->addrlng}}</td></tr>
-		<tr><td>Créé le</td><td>{{$rent->created_at}}</td></tr>
-		<tr><td>Mise à jour le</td><td>{{$rent->updated_at}}</td></tr>
+			<tr><td>Logement</td><td> @if($rent->buildingIndividual==1) collectif @else individuel @endif </td></tr>
+			<tr><td>HLM</td><td> @if($rent->buildingHLM==1) oui @else non @endif </td></tr>
+	
+			<tr><td>Surface</td><td> {{ $rent->surfaceM2 }} </td></tr>
+			<tr><td>Nbr pièces</td><td> {{ $rent->roomsCount }} </td></tr>
+			<tr><td>Cuisine séparée</td><td> {{ $rent->kitchenRoom }} </td></tr>
+	
+			<tr><td>Étage</td><td>{{$rent->buildingStage}} </td></tr>
+			<tr><td>Nom</td><td>{{$rent->buildingName}} </td></tr>
+			<tr><td>Rue</td><td>{{$rent->street}} </td></tr>
+			<tr><td>Code postal</td><td>{{$rent->zipcode}} </td></tr>
+			<tr><td>Ville</td><td>{{$rent->city}} </td></tr>
+			<tr><td>Pays</td><td>{{$rent->country}} </td></tr>
+			<tr><td>Latitude</td><td>{{$rent->addrlat}} </td></tr>
+			<tr><td>Longitude</td><td>{{$rent->addrlng}} </td></tr>
+	
+			<tr><td>Créé le</td><td>{{$rent->created_at}} </td></tr>
+			<tr><td>Mise à jour le</td><td>{{$rent->updated_at}} </td></tr>
 		</table>
 	</div>
 	<div class="col-md-6">
@@ -44,10 +51,17 @@
 <h2>Loyers</h2>
 
 <table class="table">
-@foreach($rent->prices as $rentPrice)
-<tr><td>{{$rentPrice->year}}</td><td>{{$rentPrice->price}}</td></tr>
-@endforeach
+	@foreach($rent->prices as $rentPrice)
+		<tr>
+			<td> {{$rentPrice->year}} </td>
+			<td> {{$rentPrice->price}} </td>
+			<td> {{$rentPrice->loads}} </td>
+			<td> {{$rentPrice->loadsOther}} </td>
+			<td> {{$rentPrice->loadsOtherText}} </td>
+		</tr>
+	@endforeach
 </table>
+
 <a href="/rent/{{ $rent->id }}/edit"><button>Éditer</button></a>
 
 @stop

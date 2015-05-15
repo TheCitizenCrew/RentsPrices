@@ -15,13 +15,13 @@ class CreateRentsTable extends Migration {
 		Schema::create('rents', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->boolean('buildingIndividual');
+			$table->boolean('buildingIndividual')->nullable();
 			$table->integer('buildingStage');
 			$table->string('buildingName');
 			$table->string('street');
 			$table->string('zipcode');
 			$table->string('city');
-			$table->timestamps();
+			$table->timestamps(); // Adds created_at and updated_at columns
 		});
 	}
 

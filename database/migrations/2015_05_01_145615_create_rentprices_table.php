@@ -21,7 +21,7 @@ class CreateRentpricesTable extends Migration {
 			$table->foreign('rent_id')
 				->references('id')->on('rents')
 				->onDelete('cascade');
-			$table->timestamps();
+			$table->timestamps(); // Adds created_at and updated_at columns
 		});
 	}
 

@@ -22,6 +22,7 @@ class Rent extends Model
 		'id',	// FIXME : should not be there
 		'buildingIndividual',
 		'buildingStage',
+		'buildingHLM',
 		'buildingName',
 		'street',
 		'zipcode',
@@ -29,19 +30,21 @@ class Rent extends Model
 		'country',
 		'addrlat',
 		'addrlng',
-		'geolocManual' // automatic or manual address geolocalization
+		'geolocManual', // automatic or manual address geolocalization
+		'roomsCount',
+		'kitchenRoom',
+		'surfaceM2'
 	];
 
 	public static $rules = [
 		'buildingIndividual'=>'required|boolean',
-		'buildingStage'=>'',
-		'buildingName'=>'',
+		'buildingHLM'=>'required|boolean',
 		'street'=>'required',
 		'zipcode'=>'required',
 		'city'=>'required',
 		'country'=>'required',
-		'addrlat'=>'required',
-		'addrlng'=>'required'
+		'addrlat'=>'required|numeric',
+		'addrlng'=>'required|numeric'
 	];
 
 	/**

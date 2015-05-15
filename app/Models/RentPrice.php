@@ -13,11 +13,22 @@ class RentPrice extends Model
 	// http://laravel.com/docs/5.0/eloquent#soft-deleting
 	use SoftDeletes;
 
-	protected $fillable = ['year', 'price'];
+	protected $fillable = [
+		'year',		
+		'month',
+		'price',
+		'loads',
+		'loadsOther',
+		'loadsOtherText',
+	];
 	
 	public static $rules = [
-			'year'=>'required|numeric',
-			'price'=>'required|numeric'
+		'year'=>'required|integer',
+		'month'=>'required|integer',
+		'price'=>'required|numeric',
+		'loads'=>'required|numeric',
+		'loadsOther'=>'numeric',
+		'loadsOtherText'=>'numeric',
 	];
 
 	/**
