@@ -22,6 +22,7 @@ L'idée est de permettre des études à partir de données déclarées (crowdsou
   - [ ] export data on query
   - [ ] statistics by years, places, ... 
 
+Full detailled tasks are visible on https://github.com/TheCitizenCrew/RentsPrices/issues
 
 ## Installation
 
