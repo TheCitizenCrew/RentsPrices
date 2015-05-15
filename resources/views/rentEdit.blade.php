@@ -188,84 +188,72 @@
 				<div id="rentRow{{$rowsCount}}" class="form-group">
 					<input type="hidden" name="rentprice[{{$rowsCount}}][id]" value="{{$price->id}}" /></form>
 					<fieldset>
-						<div class="col-sm-12">
-							<div class="form-group row">
+						<span class="col-sm-1 col-xs-1 control-label rentCount" > {{$rowsCount + 1}} </span>
+						<div class="col-sm-11">
 
+							<div class="form-group row">
 								<div class="col-sm-2">
 									<label >Année</label>
-									<input type="text" class="form-control" placeholder="L'année"
-										name="rentprice[{{$rowsCount}}][year]" value="{{$price->year}}" />
+									<input type="text" class="form-control" placeholder="L'année" name="rentprice[{{$rowsCount}}][year]" value="{{$price->year}}" />
 									@if( $errors->first('year'.$rowsCount) )
 										<p class="text-danger">error {{$errors->first('year'.$rowsCount)}} </p>
 									@endif				
 								</div>
-	
 								<div class="col-sm-2">
 									<label>Mois</label>
-									<input type="text" class="form-control" placeholder="Le mois"
-										name="rentprice[{{$rowsCount}}][month]" value="{{$price->month}}" />
+									<input type="text" class="form-control" placeholder="Le mois" name="rentprice[{{$rowsCount}}][month]" value="{{$price->month}}" />
 									@if( $errors->first('month'.$rowsCount) )
 										<p class="text-danger">error {{$errors->first('month'.$rowsCount)}} </p>
 									@endif
 								</div>
-
 								<div class="col-sm-2">
 									<label>Loyer</label>
-									<input type="text" class="form-control" placeholder="Le prix mensuel"
-										name="rentprice[{{$rowsCount}}][price]" value="{{$price->price}}" />
+									<input type="text" class="form-control" placeholder="Le prix mensuel" name="rentprice[{{$rowsCount}}][price]" value="{{$price->price}}" />
 									@if( $errors->first('price'.$rowsCount) )
 										<p class="text-danger">error {{$errors->first('price'.$rowsCount)}} </p>
 									@endif
 								</div>
-
 								<div class="col-sm-2">
 									<label>Charges</label>
-									<input type="text" class="form-control" placeholder="Les charges"
-										name="rentprice[{{$rowsCount}}][loads]" value="{{$price->loads}}" />
+									<input type="text" class="form-control" placeholder="Les charges" name="rentprice[{{$rowsCount}}][loads]" value="{{$price->loads}}" />
 									@if( $errors->first('loads'.$rowsCount) )
 										<p class="text-danger">error {{$errors->first('loads'.$rowsCount)}} </p>
 									@endif
 								</div>
-
 							</div>
 
 							<div class="form-group row">
-							
 								<div class="col-sm-2">
 									<label>Autres Charges</label>
-									<input type="text" class="form-control" placeholder="Autres charges"
-										name="rentprice[{{$rowsCount}}][loadsOther]" value="{{$price->loadsOther}}" />
+									<input type="text" class="form-control" placeholder="Autres charges" name="rentprice[{{$rowsCount}}][loadsOther]" value="{{$price->loadsOther}}" />
 									@if( $errors->first('loadsOther'.$rowsCount) )
 										<p class="text-danger">error {{$errors->first('loadsOther'.$rowsCount)}} </p>
 									@endif
 								</div>
 								<div class="col-sm-4">
 									<label>Description autres Charges</label>
-									<input type="text" class="form-control" placeholder="Description autres charges"
-										name="rentprice[{{$rowsCount}}][loadsOtherText]" value="{{$price->loadsOtherText}}" />
+									<input type="text" class="form-control" placeholder="Description autres charges" name="rentprice[{{$rowsCount}}][loadsOtherText]" value="{{$price->loadsOtherText}}" />
 									@if( $errors->first('loadsOtherText'.$rowsCount) )
 										<p class="text-danger">error {{$errors->first('loadsOtherText'.$rowsCount)}} </p>
 									@endif
 								</div>
-
 								<div class="col-sm-1">
 									<button type="button" class="btn btn-default rentpriceTrash" data-rowcount="{{$rowsCount}}" aria-label="Left Align">
 										<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 									</button>
 								</div>
-
 							</div>
 
 						</div>
 					</fieldset>
 					<hr/>
-				</div>
+				</div><!-- #rentRow{{$rowsCount}} -->
 				<?php $rowsCount ++ ; ?>
 				@endforeach
 
 				<button type="button" id="addRent" class="btn btn-default">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un loyer</button>
-			</div>
+			</div><!-- #rents -->
 
 			<br/>
 			<a href="@if($rent->id > 0) {{ app('url')->route('RentShow',array('id'=>$rent->id)) }} @else {{ app('url')->route('Home') }} @endif" class="btn btn-warning">Annuler</a>
@@ -290,26 +278,49 @@
 			{
 				var n = $('#rents > div').size();
 				// Clone the initial Rent's row div "#rentRow"
-				var row = $('#rentRow0').clone();
+				var row = $('#rentRow0').clone().show();
+
 				row.attr('id', 'rentRow' + n );
 				// Rename the input field "rentprice[0][xxx]"
 				row.html( row.html().replace(/(rentprice\[)[0-9]+(\])/gm, '$1'+n+'$2') );
+
 				// emptying all inputs fields value
 				$('input', row).val(null);
+
+				$('.rentpriceTrash', row )
+					.data('rowcount', n)
+					.on('click', onRentpriceTrash );
+
 				// Insert the copy into the DOM
 				$(this).before( row );
+
+				renumberingVisibleRows();
+				
 			});
 
-			// Remove a RentPrice
-			$('.rentpriceTrash').on('click', function()
-			{
-				var row = $('#rentRow' + $(this).data().rowcount );
-				// The input for #id should be outside the fieldset !
-				$('fieldset input', row).val(null);
-				row.hide();
-			});
+			// connect existing rentprice's trash(es)
+			$('.rentpriceTrash').on('click', onRentpriceTrash );
 
 		});
+
+		function onRentpriceTrash(e)
+		{
+			var row = $('#rentRow' + $(this).data('rowcount') );
+			// The input for #id should be outside the fieldset !
+			$('fieldset input', row).val(null);
+			row.hide();
+
+			renumberingVisibleRows();
+		}
+
+		function renumberingVisibleRows()
+		{
+			var idx = 1 ;
+			$('#rents > div:visible').each( function(){
+				$('.rentCount', this ).text( idx );
+				idx ++ ;
+			});
+		}
 
 	</script>
 
