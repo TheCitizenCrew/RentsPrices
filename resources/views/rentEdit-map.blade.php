@@ -35,7 +35,8 @@ Center sur le marqueur</a>
 		var map, geocodeMarker,
 			geocoder = new GeocoderAddOk( {limit: 10 } ),
 			defaultMapView = [45.936, 10.481],
-			zoom = 17 ;
+			zoom = 17,
+			zoomBadScore = 10;
 
 		$(function() {
 
@@ -133,8 +134,6 @@ Center sur le marqueur</a>
 			}
 			console.log('score: '+data[0].score);
 
-			// pan the map and geomarker
-			map.fitBounds(data[0].bbox);
 			geocodeMarker.setLatLng(data[0].center);
 
 			// update data
@@ -147,6 +146,11 @@ Center sur le marqueur</a>
 			{
 				// Poor result
 				geocodeMarker.setIcon(iconGeolocNotFound);
+				map.setZoomAround( data[0].center, zoomBadScore );
+			}
+			else
+			{
+				map.fitBounds(data[0].bbox);
 			}
 
 		}
