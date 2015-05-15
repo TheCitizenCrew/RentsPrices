@@ -87,12 +87,9 @@ Center sur le marqueur</a>
 
 			// if geolocManual is on and force is off, do nothing
 
-			if( force == undefined || force == false )
+			if( geolocManual() && (force == undefined || force == false) )
 			{
-				if( geolocManual() )
-				{
-					return ;
-				}
+				return ;
 			}
 
 			// Construct the address query string
@@ -103,7 +100,6 @@ Center sur le marqueur</a>
 				if( v != undefined && v.trim() != '' )
 					addr.push( v );
 			} );
-			console.log('addr.length: '+addr.length);
 			if( addr.length < 4 )
 			{
 				$('#locateAddress').popover('show');
@@ -136,20 +132,25 @@ Center sur le marqueur</a>
 
 			geocodeMarker.setLatLng(data[0].center);
 
-			// update data
-			$('#addrlat').val( data[0].center.lat );
-			$('#addrlng').val( data[0].center.lng );
-
 			geolocManual(false);
 
-			if( data[0].score < 0.5 )
+			if( data[0].score <= 0.5 )
 			{
 				// Poor result
+
+				// erase data
+				$('#addrlat').val(null);
+				$('#addrlng').val(null);
+
 				geocodeMarker.setIcon(iconGeolocNotFound);
-				map.setZoomAround( data[0].center, zoomBadScore );
+				map.setView( data[0].center, zoomBadScore );
 			}
 			else
 			{
+				// update data
+				$('#addrlat').val( data[0].center.lat );
+				$('#addrlng').val( data[0].center.lng );
+
 				map.fitBounds(data[0].bbox);
 			}
 
