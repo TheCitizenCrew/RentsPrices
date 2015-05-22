@@ -53,10 +53,17 @@
 <table class="table">
 	@foreach($rent->prices as $rentPrice)
 		<tr>
+			<th>Année</th>
+			<th>Loyer</th>
+			<th>Charges</th>
+			<th>Autres charges</th>
+			<th>Autres charges description</th>
+		</tr>
+		<tr>
 			<td> {{$rentPrice->year}} </td>
-			<td> {{$rentPrice->price}} </td>
-			<td> {{$rentPrice->loads}} </td>
-			<td> {{$rentPrice->loadsOther}} </td>
+			<td> {{$rentPrice->price}} €</td>
+			<td> {{$rentPrice->loads}} €</td>
+			<td> {{$rentPrice->loadsOther}} €</td>
 			<td> {{$rentPrice->loadsOtherText}} </td>
 		</tr>
 	@endforeach
