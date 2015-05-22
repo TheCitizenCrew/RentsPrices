@@ -8,7 +8,8 @@
 				"laravel/lumen-framework": "5.0.*",
 				"vlucas/phpdotenv": "~1.0",
 				"aziz/smartmodel": "2.*",
-				"venturecraft/revisionable": "dev-master"
+				"venturecraft/revisionable": "dev-master",
+				"phpoffice/phpexcel" : "1.8.*"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0"

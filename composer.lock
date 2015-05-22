@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4c678991664148dc2f8ff67b34289305",
+    "hash": "719c1bb2d183e8d0d14c552aba8cbe9d",
     "packages": [
         {
             "name": "aziz/smartmodel",
@@ -1281,16 +1281,16 @@
         },
         {
             "name": "laravel/lumen-framework",
-            "version": "v5.0.9",
+            "version": "v5.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/lumen-framework.git",
-                "reference": "b7734d6151ae3809db93d8fc30d1ed5d3541b84e"
+                "reference": "e448d32592afb4fbc29ff91d850215cb9e3a24ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/lumen-framework/zipball/b7734d6151ae3809db93d8fc30d1ed5d3541b84e",
-                "reference": "b7734d6151ae3809db93d8fc30d1ed5d3541b84e",
+                "url": "https://api.github.com/repos/laravel/lumen-framework/zipball/e448d32592afb4fbc29ff91d850215cb9e3a24ba",
+                "reference": "e448d32592afb4fbc29ff91d850215cb9e3a24ba",
                 "shasum": ""
             },
             "require": {
@@ -1365,7 +1365,7 @@
                 "laravel",
                 "lumen"
             ],
-            "time": "2015-05-08 12:58:04"
+            "time": "2015-05-21 18:04:31"
         },
         {
             "name": "league/flysystem",
@@ -1656,6 +1656,63 @@
                 "routing"
             ],
             "time": "2015-02-26 15:33:07"
+        },
+        {
+            "name": "phpoffice/phpexcel",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/PHPExcel.git",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPExcel": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Maarten Balliauw",
+                    "homepage": "http://blog.maartenballiauw.be"
+                },
+                {
+                    "name": "Mark Baker"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://blog.rootslabs.net"
+                },
+                {
+                    "name": "Erik Tilt"
+                }
+            ],
+            "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
+            "homepage": "http://phpexcel.codeplex.com",
+            "keywords": [
+                "OpenXML",
+                "excel",
+                "php",
+                "spreadsheet",
+                "xls",
+                "xlsx"
+            ],
+            "time": "2015-05-01 07:00:55"
         },
         {
             "name": "psr/log",
