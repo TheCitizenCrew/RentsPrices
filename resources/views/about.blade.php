@@ -90,8 +90,9 @@
 
 <h3>Contacts</h3>
 
-<p>Ce site est un service de communication au public en ligne édité par le collectif TheCitizenCrew à titre non professionnel au sens de l’article 6, III, 1° de la loi 2004-575 du 21 juin 2004.<br/>
-Le contact du collectif TheCitizenCrew est Cyrille Giquello joignable par email cyrille <i>arobase</i> giquello <i>point</i> fr ou par téléphone 06 32 33 02 18.</p>
+<p>Ce site est un service de communication au public en ligne édité par le collectif TheCitizenCrew à titre non professionnel au sens de l’article 6, III, 1° de la loi 2004-575 du 21 juin 2004.</p>
+
+<p>Le contact du collectif TheCitizenCrew est Cyrille Giquello joignable par email cyrille <i>arobase</i> giquello <i>point</i> fr ou par téléphone 06 32 33 02 18.</p>
 
 <p>La machine nécessaire au fonctionnement de ce service est louée à la société <a href="http://ovh.fr">OVH</a>.</p>
 
