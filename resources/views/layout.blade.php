@@ -38,8 +38,9 @@
 		    <div class="collapse navbar-collapse" id="navbar-items-collapse" >
 		      <ul class="nav navbar-nav">
 		        <li ><a href="/rent">Ajouter un loyer<span class="sr-only">(current)</span></a></li>
+		        <li><a href="/export">Export</a></li>
 		        <li><a href="/about">À propos</a></li>
-					</ul>
+		      </ul>
 				</div>
 
 			</div>

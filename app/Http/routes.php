@@ -22,6 +22,7 @@
  */
 $app->get( '/', ['as'=>'Home', 'uses'=>'App\Http\Controllers\Controller@home'] );
 $app->get( '/about', ['as'=>'About', 'uses'=>'App\Http\Controllers\Controller@about'] );
+$app->get( '/export', ['as'=>'Export', 'uses'=>'App\Http\Controllers\Controller@export'] );
 
 $app->group( [ 'prefix' => 'rent' ], 
 	function ( Laravel\Lumen\Application $app )
@@ -42,6 +43,6 @@ $app->group( [ 'prefix' => 'api' ],
 		$app->get(
 			'rentsFindInBBox/{swLat:[0-9\.\-]+}/{swLng:[0-9\.\-]+}/{neLat:[0-9\.\-]+}/{neLng:[0-9\.\-]+}',
 			'App\Http\Controllers\ApiController@rentsFindInBBox' );
-
+		$app->get( 'rentsExport/{format:json|csv|ods}', 'App\Http\Controllers\ApiController@rentsExport' );
 	} );
 

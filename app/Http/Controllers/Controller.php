@@ -15,4 +15,9 @@ class Controller extends BaseController
     	return view('about');
     }
 
+    public function export()
+    {
+    	return view('export');
+    }
+
 }
