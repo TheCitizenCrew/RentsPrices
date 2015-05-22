@@ -1,8 +1,8 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
-    "license": "MIT",
+    "name": "Prix des Loyers",
+    "description": "Crowdsourcing des prix des loyers",
+    "keywords": ["crowdsourcing", "opendata", "transparence"],
+    "license": "GPL v3",
     "type": "project",
     "require": {
 				"laravel/lumen-framework": "5.0.*",
