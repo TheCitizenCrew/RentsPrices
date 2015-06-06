@@ -264,7 +264,7 @@
 
 							<div class="form-group row">
 								<div class="col-sm-2">
-									<label>Autres Charges</label> <input type="text"
+									<label>dont autres Charges</label> <input type="text"
 										class="form-control" placeholder="Autres charges"
 										name="rentprice[{{$rowsCount}}][loadsOther]"
 										value="{{$price->loadsOther}}" /> @if(

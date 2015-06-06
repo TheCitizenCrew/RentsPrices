@@ -27,8 +27,7 @@ class RentPrice extends Model
 		'month'=>'required|integer',
 		'price'=>'required|numeric',
 		'loads'=>'required|numeric',
-		'loadsOther'=>'numeric',
-		'loadsOtherText'=>'numeric',
+		'loadsOther'=>'numeric'
 	];
 
 	/**
