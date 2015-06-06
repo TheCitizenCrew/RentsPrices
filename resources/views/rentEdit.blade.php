@@ -29,7 +29,7 @@
 				<label class="control-label">
 					<input type="radio" name="buildingIndividual" value="1" @if($rent->buildingIndividual==1) checked="checked" @endif />Logement collectif </label>
 				<label class="control-label">
-					<input type="radio" name="buildingIndividual" value="0" @if($rent->buildingIndividual==='0') checked="checked" @endif />Logement individuelle
+					<input type="radio" name="buildingIndividual" value="0" @if($rent->buildingIndividual=='0') checked="checked" @endif />Logement individuelle
 				</label>
 				<span class="help-block">La bâtiment héberge-t-il un (individuel) ou plusieurs logements (collectif).</span>
 			</div>
@@ -46,11 +46,12 @@
 					<label class="control-label"> <input type="radio"
 						name="buildingHLM" value="1" @if($rent->buildingHLM==1)
 						checked="checked" @endif />Oui
-					</label> <label class="control-label"> <input type="radio"
-						name="buildingHLM" value="0" @if($rent->buildingHLM==='0')
+					</label>
+					<label class="control-label"> <input type="radio"
+						name="buildingHLM" value="0" @if($rent->buildingHLM=='0')
 						checked="checked" @endif />Non
-					</label> <span class="help-block">Est-ce un logement à loyer modéré
-						?</span>
+					</label>
+					<span class="help-block">Est-ce un logement à loyer modéré ?</span>
 				</div>
 			</div>
 
@@ -93,7 +94,7 @@
 						name="kitchenRoom" value="1" @if($rent->kitchenRoom==1)
 						checked="checked" @endif />Oui
 					</label> <label class="control-label"> <input type="radio"
-						name="kitchenRoom" value="0" @if($rent->kitchenRoom==='0')
+						name="kitchenRoom" value="0" @if($rent->kitchenRoom=='0')
 						checked="checked" @endif />Non
 					</label> <span class="help-block">La cuisine est-elle une pièce
 						dédiée ?</span>

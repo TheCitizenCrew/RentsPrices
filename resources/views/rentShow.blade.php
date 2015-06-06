@@ -28,7 +28,7 @@
 	
 			<tr><td>Surface</td><td> {{ $rent->surfaceM2 }} </td></tr>
 			<tr><td>Nbr pièces</td><td> {{ $rent->roomsCount }} </td></tr>
-			<tr><td>Cuisine séparée</td><td> {{ $rent->kitchenRoom }} </td></tr>
+			<tr><td>Cuisine séparée</td><td> @if($rent->kitchenRoom==1) oui @else non @endif </td></tr>
 	
 			<tr><td>Étage</td><td>{{$rent->buildingStage}} </td></tr>
 			<tr><td>Nom</td><td>{{$rent->buildingName}} </td></tr>
