@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
 				"laravel/lumen-framework": "5.0.*",
+				"doctrine/dbal": "2.5.1",
 				"vlucas/phpdotenv": "~1.0",
 				"aziz/smartmodel": "2.*",
 				"venturecraft/revisionable": "dev-master",
