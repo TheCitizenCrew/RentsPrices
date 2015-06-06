@@ -24,7 +24,7 @@
 			<label for="buildingIndividual" class="col-sm-1 control-label">Type</label>
 			<div class="col-sm-6 checkbox">
 				@if ($errors->first('buildingIndividual'))
-				<p class="text-danger">error {{$errors->first('buildingIndividual')}}</p>
+				<p class="text-danger">Erreur: {{$errors->first('buildingIndividual')}}</p>
 				@endif
 				<label class="control-label">
 					<input type="radio" name="buildingIndividual" value="1" @if($rent->buildingIndividual==1) checked="checked" @endif />Logement collectif </label>
@@ -41,7 +41,7 @@
 				<label for="buildingStage" class="col-sm-1 control-label">HLM</label>
 				<div class="col-sm-5 checkbox">
 					@if ($errors->first('buildingHLM'))
-					<p class="text-danger">error {{$errors->first('buildingHLM')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('buildingHLM')}}</p>
 					@endif
 					<label class="control-label"> <input type="radio"
 						name="buildingHLM" value="1" @if($rent->buildingHLM==1)
@@ -60,7 +60,7 @@
 				<label for="surfaceM2" class="col-sm-1 control-label">Surface en m2</label>
 				<div class="col-sm-2">
 					@if ($errors->first('surfaceM2'))
-					<p class="text-danger">error {{$errors->first('surfaceM2')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('surfaceM2')}}</p>
 					@endif
 					<input type="text" class="form-control" name="surfaceM2"
 						id="surfaceM2" placeholder="Surface du logement"
@@ -74,7 +74,7 @@
 					pièces</label>
 				<div class="col-sm-2">
 					@if ($errors->first('roomsCount'))
-					<p class="text-danger">error {{$errors->first('roomsCount')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('roomsCount')}}</p>
 					@endif
 					<input type="text" class="form-control" name="roomsCount"
 						id="roomsCount" placeholder="Nombre de pièces du logement"
@@ -88,7 +88,7 @@
 					cuisine</label>
 				<div class="col-sm-5 checkbox">
 					@if ($errors->first('kitchenRoom'))
-					<p class="text-danger">error {{$errors->first('kitchenRoom')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('kitchenRoom')}}</p>
 					@endif
 					<label class="control-label"> <input type="radio"
 						name="kitchenRoom" value="1" @if($rent->kitchenRoom==1)
@@ -106,7 +106,7 @@
 				<label for="buildingStage" class="col-sm-1 control-label">Étage</label>
 				<div class="col-sm-2">
 					@if ($errors->first('buildingStage'))
-					<p class="text-danger">error {{$errors->first('buildingStage')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('buildingStage')}}</p>
 					@endif
 					<input type="text" class="form-control" name="buildingStage"
 						id="buildingStage" placeholder="L'étage du logement"
@@ -119,7 +119,7 @@
 				<label for="buildingName" class="col-sm-1 control-label">Bâtiment</label>
 				<div class="col-sm-6">
 					@if ($errors->first('buildingName'))
-					<p class="text-danger">error {{$errors->first('buildingName')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('buildingName')}}</p>
 					@endif
 					<input type="text" class="form-control" name="buildingName"
 						id="buildingName" placeholder="Numéro ou nom du bâtiment"
@@ -131,7 +131,7 @@
 				<label for="street" class="col-sm-1 control-label">Rue</label>
 				<div class="col-sm-8">
 					@if ($errors->first('street'))
-					<p class="text-danger">error {{$errors->first('street')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('street')}}</p>
 					@endif
 					<input type="text" class="form-control" name="street" id="street"
 						placeholder="Numéro et nom de la rue" value="{{$rent->street}}" />
@@ -142,7 +142,7 @@
 				<label for="zipcode" class="col-sm-1 control-label">Code postal</label>
 				<div class="col-sm-2">
 					@if ($errors->first('zipcode'))
-					<p class="text-danger">error {{$errors->first('zipcode')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('zipcode')}}</p>
 					@endif
 					<input type="text" class="form-control" name="zipcode" id="zipcode"
 						placeholder="Code postal" value="{{$rent->zipcode}}" />
@@ -153,7 +153,7 @@
 				<label for="city" class="col-sm-1 control-label">Ville</label>
 				<div class="col-sm-8">
 					@if ($errors->first('city'))
-					<p class="text-danger">error {{$errors->first('city')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('city')}}</p>
 					@endif
 					<input type="text" class="form-control" name="city" id="city"
 						placeholder="Commune" value="{{$rent->city}}" />
@@ -164,7 +164,7 @@
 				<label for="country" class="col-sm-1 control-label">Pays</label>
 				<div class="col-sm-8">
 					@if ($errors->first('country'))
-					<p class="text-danger">error {{$errors->first('country')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('country')}}</p>
 					@endif
 					<input type="text" class="form-control" name="country" id="country"
 						placeholder="Le Pays" value="{{$rent->country}}" />
@@ -188,7 +188,7 @@
 				<label for="addrlat" class="col-sm-1 control-label">Lattitude</label>
 				<div class="col-sm-3">
 					@if ($errors->first('addrlat'))
-					<p class="text-danger">error {{$errors->first('addrlat')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('addrlat')}}</p>
 					@endif
 					<input type="text" class="form-control" name="addrlat" id="addrlat"
 						placeholder="latitude" value="{{$rent->addrlat}}" />
@@ -198,7 +198,7 @@
 				<label for="addrlng" class="col-sm-1 control-label">Longitude</label>
 				<div class="col-sm-3">
 					@if ($errors->first('addrlng'))
-					<p class="text-danger">error {{$errors->first('addrlng')}}</p>
+					<p class="text-danger">Erreur: {{$errors->first('addrlng')}}</p>
 					@endif
 					<input type="text" class="form-control" name="addrlng" id="addrlng"
 						placeholder="longitude" value="{{$rent->addrlng}}" />
