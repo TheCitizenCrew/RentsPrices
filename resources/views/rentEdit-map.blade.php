@@ -104,6 +104,10 @@ Center sur le marqueur</a>
 			{
 				$('#locateAddress').popover('show');
 			}
+			else
+			{
+				$('#locateAddress').popover('hide');
+			}
 			if( addr.length == 0 )
 			{
 				return ;
