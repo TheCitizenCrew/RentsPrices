@@ -99,6 +99,10 @@ class RentController extends BaseController
 			$errors = array_merge( $errors, $validator->errors()->getMessages() );
 		}
 
+		DB::beginTransaction();
+
+		$rent->save();
+		
 		// RentPrices validation
 
 		$rentPricesToDelete = $this->updateProcessRentPrices( $request, $rent, $errors );
@@ -106,15 +110,22 @@ class RentController extends BaseController
 		if( count( $errors ) > 0 )
 		{
 			return view( 'rentEdit', [ 'rent' => $rent ] )->withErrors( $errors );
+			DB::rollBack();
 		}
 
+		$rent->push();
+		RentPrice::destroy($rentPricesToDelete);
+
+		DB::commit();
+		
+		/*
 		DB::transaction(
 			function () use($rent, $rentPricesToDelete)
 			{
 				$rent->push();
 				RentPrice::destroy($rentPricesToDelete);
 			}
-		);
+		);*/
 		
 		return  redirect('/rent/'.$rent->id);
 	}
